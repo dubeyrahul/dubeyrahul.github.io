@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Hank Quinlan, Horrible Cop, Launches Site"
+title: "I finally get this blog started"
 date: 2014-04-30
 ---
 
