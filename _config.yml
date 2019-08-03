@@ -1,4 +1,5 @@
 name: Rahul Dubey, Machine Learning Engineer
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title
-
+theme: minima
+url: ""
