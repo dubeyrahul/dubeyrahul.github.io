@@ -1,31 +1,14 @@
 <!DOCTYPE html>
-	<html>
-		<head>
-			<title>{{ page.title }}</title>
-			<!-- link to main stylesheet -->
-			<link rel="stylesheet" type="text/css" href="/css/main.css">
-		</head>
-		<body>
-			<nav>
-	    		<ul>
-	        		<li><a href="/">Home</a></li>
-		        	<li><a href="/about">About</a></li>
-	        		<li><a href="https://dubeyrahul.github.io/resume/">CV</a></li>
-	        		<li><a href="/blog">Blog</a></li>
-	    		</ul>
-			</nav>
-			<div class="container">
-			
-			{{ content }}
-			
-			</div><!-- /.container -->
-			<footer>
-	    		<ul>
-				<li><a href="mailto:rahuldubey.vjti@gmail.com">Email</a></li>
-                        	<li><a href="https://github.com/dubeyrahul">Github</a></li>
-                        	<li><a href="https://www.linkedin.com/in/rvdubey/">LinkedIn</a></li>
-                        	<li><a href="https://twitter.com/dubeyrahul92">Twitter</a></li>
-				</ul>
-			</footer>
-		</body>
-	</html>
+<html lang="{{ page.lang | default: site.lang | default: "en" }}">
+<link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+  <body>
+    {% include header.html %}
+    <main class="page-content" aria-label="Content">
+      <div class="wrapper">
+        {{ content }}
+      </div>
+    </main>
+    {% include footer.html %}
+  </body>
+
+</html>

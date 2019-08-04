@@ -5,5 +5,19 @@ title: Rahul Dubey, Machine Learning Engineer
 <div class="blurb">
 	<h1>Hi there, I'm Rahul Dubey!</h1>
         <p>I've created this space to talk about technical and non-technical stuff that I like. In a nutshell, it is going to be about the following topics: Machine
-Learning, Data, Distributed Systems, Books, TV shows, Comedy. Read more <a href="/about">about me</a></p>
+Learning, Data, Distributed Systems, Books, TV shows, Comedy, and so on.</p>
 </div><!-- /.blurb -->
+<div class="home">
+
+  <ul class="posts">
+    {% for post in site.posts %}
+      <li>
+        <span class="post-date">{{ post.date | date: "%b %-d, %Y" }}</span>
+        <a class="post-link" href="{{ post.url | prepend: site.baseurl }}">{{ post.title }}</a>
+        <br>
+        {{ post.excerpt }}
+      </li>
+    {% endfor %}
+  </ul>
+
+</div>

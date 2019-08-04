@@ -1,5 +1,7 @@
 name: Rahul Dubey, Machine Learning Engineer
+title: Rahul Dubey's Blog
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title
 theme: minima
 url: ""
+email: rahuldubey.vjti@gmail.com
