@@ -3,5 +3,6 @@ title: Rahul Dubey's Blog
 markdown: kramdown
 permalink: /blog/:year/:month/:day/:title
 theme: minima
-url: ""
+baseurl: ""
+url: "http://dubeyrahul.github.io"
 email: rahuldubey.vjti@gmail.com
