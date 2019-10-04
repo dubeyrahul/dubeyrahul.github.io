@@ -1,10 +1,9 @@
 ---
 layout: post
-title: "Python tips: Part 1 - Writing clean Python code"
+title: "Writing Pythonic Code: Part 1"
 date: 2019-08-03
 ---
-
-In this post, we will go over some basic techniques of making your Python code more readable by following some simple Pythonic principles laid out in PEP-8.
+This is the first of many Python related posts that I plan to write while studying how to write good Python code from the book [Effective Python](https://effectivepython.com/). In this post, we will go over some techniques of making your Python code more readable by following some simple Pythonic principles laid out in PEP-8.
 
 
 + [Why should we learn to write Pythonic code](#why-should-we-learn-to-write-pythonic-code)
@@ -50,7 +49,7 @@ print(getcwd())
 import os  
 print(os.getcwd())
 {% endhighlight %}
-    
+
 
 #### Prefer simple over complex
 
@@ -61,7 +60,7 @@ print(os.getcwd())
 my_bool_val = 10 > 5
 if my_bool_val == True:
     print ('my_bool_val is True')  	    
-# do this: 
+# do this:
 my_bool_val = 10 > 5
 if my_bool_val:
     print ('my_bool_val is True')
@@ -73,7 +72,7 @@ if my_bool_val:
 {% highlight python %}
 val = my_dict.get(my_key,  [''])[0] or 0			    
 {% endhighlight %}
-Now, this above complicated expression looks fine if it is used just once, but you might need to use this several times for reading numerous keys from your dict. Also, what if you decide to change the default value? Then you'll need to change it for all the `get` statements. To tackle this, you could make a small helper function like this: 
+Now, this above complicated expression looks fine if it is used just once, but you might need to use this several times for reading numerous keys from your dict. Also, what if you decide to change the default value? Then you'll need to change it for all the `get` statements. To tackle this, you could make a small helper function like this:
 
 {% highlight python %}
 def get_first_val(my_dict, key, default = 0):
@@ -86,24 +85,24 @@ def get_first_val(my_dict, key, default = 0):
 {% endhighlight %}
 
 This allows you to separate out a complex dictionary reading, write a testable piece of code and gives you flexibility to change the default value.
-	
+
 #### Maximize readability
 Your code may be processed by a machine but it will be read and consumed repeatedly by humans, so be nice to your fellow species. As the author of Python, Guido van Rossum said:
->  **Code is read much more often than it is written.** 
+>  **Code is read much more often than it is written.**
 
 There's a lot that goes into maximizing readibility: organizing imports, using blank lines and spaces at the right places, writing helper functions to remove complicated code blocks, write helpful meaningful comments and docstrings, etc. Best suggestion is to go over PEP-8 style guide document.
 * **What is PEP8?**
 	* [PEP8](https://www.python.org/dev/peps/pep-0008/) is basically the official Python coding convention guide; to improve the readability and estabilish consistency of Python code
 	* It primarily describes how to neatly lay out the code, use whitespaces and commenting. It also dives into naming conventions and some general programming recommendations to keep in mind, some of which will be highlighted here.
 	* I strongly recommend people to at least give PEP8 a light read, and try to remember the important conventions. But as the authors themselves say, use your best judgement in deciding when to be inconsistent with the PEP8 guide. I like to keep this quote in mind from the PEP8 guide:  
- 
+
 >  **Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is the most important.**
-	
+
 * **Why does whitespace matter in Python?**
 	*	Whitespace is a crucial part of Python syntax; and this may seem a bit odd to developers moving from languages like C++ or Java where braces `{` , `}` and `;` are important part of the syntax. Check out this [link](https://www.python.org/dev/peps/pep-0008/#whitespace-in-expressions-and-statements) for PEP8 conventions on whitespaces.
 	* Use spaces instead of tabs: yes, tabs are definitely easier to type than typing 4 spaces, so perhaps configure your IDE to convert tab to 4 spaces. Most IDEs provide this functionality, and it helps you write awesome Pythonic code. For example, follow [this](https://stackoverflow.com/questions/11816147/pycharm-convert-tabs-to-spaces-automatically) to do configure PyCharm
 	* Blank lines are important too in long files to separate functions and classes: 2 blank lines between different functions, 1 blank line between class methods, use 1 blank line sparingly to indicate logical sections in a function
-	
+
 * **Naming stuff in Python?**
 	* Again, a major switch for Java developers is to not go for camelCase all the time. In Python, `lowercase_underscore` format is most common for all variables and functions.
 	* Protected and private attributes are denoted by `_leading_underscore` and `__double_leading_underscore`
@@ -117,7 +116,7 @@ There's a lot that goes into maximizing readibility: organizing imports, using b
 	`import bar`
 	* Organize imports: standard library modules, then 3rd party modules, then own modulels. All of them in alphabetical order in their own group.
 	* Now that's a lot to keep in mind, do I focus on coding or do I practice the so-called Pythonic principles. Well, fear not, because Pylint is here.  
-	
+
 * **What is Pylint tool?**  
 	* Well, first of all we should know what is `lint/linter`. It is basically a piece of software or a tool that performs static analysis on your code for programming bugs, stylistic errors, and symantic discrepancies.
 	* [Pylint](https://www.pylint.org/) is one such popular tool for Python. It helps you follow PEP-8 conventions without remembering them all, especially for length of a line of code, variable naming convention, import organization, unused imports/variables, some basic error detection. One can also customize Pylint based on what conventions they do/do not want to follow by modifying your `pylintrc` file

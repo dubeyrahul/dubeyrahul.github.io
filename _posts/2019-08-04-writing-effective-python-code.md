@@ -1,10 +1,10 @@
 ---
 layout: post
-title: "Python tips: Part 2 - Writing effective Python code"
+title: "Writing Pythonic code: Part 2"
 date: 2019-08-04
 ---
 
-In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions. I learned these lessons from the book: [Effective Python](https://www.amazon.com/Effective-Python-Specific-Software-Development/dp/0134034287/ref=sr_1_3?keywords=effective+python&qid=1564961661&s=gateway&sr=8-3) which I share below.
+This is the second post on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.
 
 + [Writing effective Python code](#writing-effective-python-code)
   - [Slicing](#slicing)
@@ -38,16 +38,16 @@ print(y) # elppa
 But this doesn't work if the string is UTF-8 encoded.
 
 
-How readable is a code with a bunch of statements like this: 
-	
+How readable is a code with a bunch of statements like this:
+
 {% highlight python %}
 x = a[2:10:-2]
-y = b[1:20:3] 
+y = b[1:20:3]
 z = c[10:-2:-1]
 {% endhighlight %}
 
 
-To me, it seems sort of readable because **I** wrote it and it's just a couple of statements. Now imagine a legacy codebase that you're trying to understand that is full of these expressions. Moreover, imagine that these indices are variables instead of integer values. Now that may become a nightmare for you to parse. Hence, it is best to avoid using start, end, and slice all in the same expression. If you really have to use stride, then skip start/end, and if you can't then break it into two expressions. So instead of the above listed expressions, we can split them like: 
+To me, it seems sort of readable because **I** wrote it and it's just a couple of statements. Now imagine a legacy codebase that you're trying to understand that is full of these expressions. Moreover, imagine that these indices are variables instead of integer values. Now that may become a nightmare for you to parse. Hence, it is best to avoid using start, end, and slice all in the same expression. If you really have to use stride, then skip start/end, and if you can't then break it into two expressions. So instead of the above listed expressions, we can split them like:
 {% highlight python %}
 
 temp = a[::-2]
@@ -78,7 +78,7 @@ even_squares = map(lambda x: x*x, a)
 # Method 3: Using list comprehension
 even_squares = [x*x for x in a]
 {% endhighlight %}
-As one can see, both method 2 and 3 are compact and readable. I strongly prefer list comprehension over map(), and this example from the book illustrates why. 
+As one can see, both method 2 and 3 are compact and readable. I strongly prefer list comprehension over map(), and this example from the book illustrates why.
 Say you want to compute squares of all even numbers in the list, then the above methods look like:
 {% highlight python %}
 # Method 1: Using for loop
@@ -94,17 +94,17 @@ even_squares = [x*x for x in a if x % 2 == 0]
 
 In my opinion, list comprehensions become much easier to read once `filter` gets involved with `map`.
 
-Note: list comprehension syntax can be applied to `set` and `dict` as well. 
+Note: list comprehension syntax can be applied to `set` and `dict` as well.
 
 * **When to not use list comprehensions**
 	* Avoid list comprehensions the moment they become unreadable, or when they start taking as much space as using for loops would. I think after that point one is just being a pretentious Python programmer :p
 	* One common scenario is multiple level of comprehension. Something like: `flat = [x for row in matrix for x in row] # flattens a 2D-matrix` is a good use of list comprehension, but the moment this becomes more than 2 level, it becomes difficult to read. Say you had a 3D array to be flatted, the code would look like:
 {% highlight python %}
 # Method 1: Using list comprehension:
-flat = [x for level_1 in matrix 
-		 for level_2 in level_1 
+flat = [x for level_1 in matrix
+		 for level_2 in level_1
 		 for x in level_3]
-		 
+
 # Method 2: Using for loops:
 flat = []
 for level_1 in matrix:
@@ -114,18 +114,18 @@ for level_1 in matrix:
 
 It seems pretty clear that for-loop is more readable here and less confusing too.
 
-* One major issue with list comprehension is that it is not scalable, in the sense it consumes a lot of memory in creating and holding the new list in memory. This is not ideal in dealing with big data, or large streams of infinite data, or while reading a big file. One common application in Machine Learning is reading large files, parsing it line by line, selecting some parts of the line as features and storing it in lists. 
+* One major issue with list comprehension is that it is not scalable, in the sense it consumes a lot of memory in creating and holding the new list in memory. This is not ideal in dealing with big data, or large streams of infinite data, or while reading a big file. One common application in Machine Learning is reading large files, parsing it line by line, selecting some parts of the line as features and storing it in lists.
 {% highlight python %}
 
 # let parse_and_extract_features(line) parse a line and extract features
-# let dataset.txt contain 1M rows. Then, 
+# let dataset.txt contain 1M rows. Then,
 file_name = 'dataset.csv'
 output_value = [parse_and_extract_features(x) for x in open(file_name)]
 output_file = open('output.csv', w)
 output_file.write(output_value)
 # output_value will be a list of 1M items and we want to write it to a new file
 {% endhighlight %}
-		
+
 
 In this case, a list of 1M items will be generated only to be written to the file and never used again. A better approach in this case is to use **generator expressions**.
 {% highlight python %}
@@ -141,14 +141,14 @@ for output_value in output_generator:
 	output_file.write(output_value)
 {% endhighlight %}
 
-			
+
 By using generator, we do not create a list of 1M items in memory and instead generate feature for one row at a time by creating output_generator object and then iterating over it. Note, we can iterate over genexp like this because essentially they are like iterators. 		
-		
+
 * In conclusion, generator expresssions are a more general form of list comprehension. They are also more efficient because they do not create the entire list in memory. Instead genexp (in short) evaluates to an iterator, that can be used to generate the result-list, one item at a time by calling next() on the evaluated iterator. In the above example, we could use genexp instead of list comprehension to evaluate and write one line at a time to the transformed_dataset file.
 * One thing to keep in mind is that genexp evaluates to iterators and once you call next() on it, that result is evaluated and returned and that value cannot be obtained again.
 
 #### Looping effectively
-* **Avoiding range / Using enumerate** 
+* **Avoiding range / Using enumerate**
 	* In Python 2, always use `xrange` instead of `range`. Difference being `xrange` generates an iterator to iterate over whereas `range` produces actual list which can be memory inefficient when iterating over a large range. In Python 3, there's only `range` function and it's a generator.
 
 	* For people coming from languages like Java and C++, Python looping may seem a little strange initially because the most common way of looping in Python does not give you access to indices, rather it gives you the elements.
@@ -171,7 +171,7 @@ for state in states:
 
 It seems pretty clear that the second option is more readable, and does the job effectively.
 
-Now there may arise a case when you absolutely do need the index of the element in the list. In that case, one might think range is the way to go. But there's a better option: *enumerate* 
+Now there may arise a case when you absolutely do need the index of the element in the list. In that case, one might think range is the way to go. But there's a better option: *enumerate*
 
 Instead of doing this:
 {% highlight python %}
@@ -190,10 +190,10 @@ for i, state in enumerate(states):
     print (i, state)
 {% endhighlight %}
 
-			
+
 enumerate function takes anything that's iterable and creates a lazy generator. This generator spits out two things: index and the next element from the iterator. It is essentially made for this task.  
 
-Note: You can also provide enumerate an additional argument, a start index, which the function uses to start its indexing (by default it begins with index=0) 
+Note: You can also provide enumerate an additional argument, a start index, which the function uses to start its indexing (by default it begins with index=0)
 
 * **Using zip / izip:**
 	* Sometimes you want to loop over multiple lists of same length which often happens at least in data science tasks, when you're looping over multiple feature list for your dataset, where each list is of size n, where n = number of examples in dataset. In that case, one might write such loop as:
@@ -204,7 +204,7 @@ for i in range(len(dataset)):
     feat_2 = feature_2[i]
     print (feat_1, feat_2)
 {% endhighlight %}
-		
+
 
 In this case, zip provides a useful generator that takes in multiple iterators and yields tuples containing the next value from each iterator (in the same order as they are given to zip)
 
@@ -232,9 +232,9 @@ finally:
 
 
 This ensures that if the exception occurs at open() then we won't attempt at closing the file handler, which is correct. We will only call close() if try block is attempted, which means open() succeeded.  
-	
-PS: I always used to write open() inside the try block with a similar finally clause, and never thought about it. So I am glad to learn this new bit. 
-	
+
+PS: I always used to write open() inside the try block with a similar finally clause, and never thought about it. So I am glad to learn this new bit.
+
 * **Using try, except, and else:**
 	* By using this trio we can make it clear which exceptions will be handled by our code and which caller is suppose to handle. When try runs successfully, else block runs. It kind of helps minimize the code in try block so you can keep the try block only for code that can raise exceptions and do other computations in else block.
 {% highlight python %}
@@ -248,23 +248,23 @@ def load_json_key(json_data, key):
 {% endhighlight %}
 
 Now if json loading fails, that will be caught by our try except block. If it goes through, then else will try to extract the value. If it can't find the key, it'll raise that error to the caller. This is done to make error propagation clear.
-	
+
 * **Using try, except, else, and finally:** In this case,  consider an example where we read something from a file, perform some computation, and return the result of that computation. In this case, we can have:
 	 - try block attempting to read the file
 	 - except catches an exception that try block is expected to throw
 	 - else block runs the computation if try block runs successfully
 	 - finally block does the clean up like closing the file handler.
-			    
+
 #### Knowing the difference between str, unicode, and bytes
 * This is something I wasn't fully aware of. I had come across both unicode and str, but I never needed to delve into details about their differences, and especially how they behave in Python 2 v/s 3. As someone who works on projects in both Python 2 and Python 3 regularly, this is definitely something I should keep in mind.
-	
+
 	| Contains  | Python 2 data-type | Python 3 data-type |
 	|-----------|--------------------|--------------------|
 	| raw 8-bit | str                | bytes              |
 	| unicode   | unicode            | str                |
 
 
-* Also, in Python 3, the encoding argument for open() defaults to UTF-8, which makes read and write operations expect the str data type containing unicode characters instead of bytes data type containing binary data. One may encounter this issue while writing binary data to a .bin file. In Python 2, you can open with 'w' argument for writing, whereas in Python 3, you've to use 'wb' argument for writing to a binary file. 
+* Also, in Python 3, the encoding argument for open() defaults to UTF-8, which makes read and write operations expect the str data type containing unicode characters instead of bytes data type containing binary data. One may encounter this issue while writing binary data to a .bin file. In Python 2, you can open with 'w' argument for writing, whereas in Python 3, you've to use 'wb' argument for writing to a binary file.
 
 ## Conclusion
 In this post, we saw several techniques to make our code more efficient and effective. Note that most of these skills build up over time. But it's helpful to know about them so that we you see them in other people's code, you can appreciate and understand its intent better.
