@@ -1,10 +1,10 @@
 name: Notebook to Blog Post
-on:
-  push:
-    branches:
-      - master
-    paths:
-      - '_notebooks/*.ipynb'
+on: [push]
+  # push:
+  #   branches:
+  #     - master
+  #   paths:
+  #     - '_notebooks/*.ipynb'
 
 jobs:
   convert-notebook:
@@ -22,6 +22,7 @@ jobs:
       # These are the minimal steps I could come up with install nbdev in the actions runner
     - name: Run notebook converter
       run: |
+        echo 'The time was ${{ steps.hello.outputs.time }}.'
         chmod -R 777 _posts/
         pip install --upgrade pip
         pip install jupyter_client ipykernel
@@ -33,6 +34,7 @@ jobs:
 
     - name: commit & push files
       run: |
+        echo 'The time was ${{ steps.hello.outputs.time }}.'
         git config --global user.name $GITHUB_ACTOR
         git remote add github "https://$GITHUB_ACTOR:$GITHUB_TOKEN@github.com/$GITHUB_REPOSITORY.git"
         git pull github ${GITHUB_REF} --ff-only
