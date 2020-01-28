@@ -4,7 +4,7 @@ on:
     branches:
       - master
     paths:
-      - '_notebooks/*.ipynb'
+      - '*'
 
 jobs:
   convert-notebook:
