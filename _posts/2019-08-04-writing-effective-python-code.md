@@ -4,7 +4,7 @@ title: "Writing Pythonic code: Part 2"
 date: 2019-08-04
 ---
 
-This is the second post on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.
+This is the second post ([here's the first]({% post_url 2019-08-03-writing-pythonic-code %})) on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.
 
 + [Writing effective Python code](#writing-effective-python-code)
   - [Slicing](#slicing)
