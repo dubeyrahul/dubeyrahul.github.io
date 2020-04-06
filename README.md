@@ -7,6 +7,7 @@ This repository contains code for my Personal blog, where I mainly talk about Py
 - `/sync` before notebook push
 
 ## Notebook push:
+Based on: https://github.com/fastai/fastpages
 Create a Jupyter Notebook with the contents of your blog post.
 
 Create a markdown cell at the beginning of your notebook with the following contents:
