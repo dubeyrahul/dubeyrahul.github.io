@@ -1,6 +1,5 @@
 name: Rahul Dubey, Machine Learning Engineer
 title: Rahul Dubey's Blog
-description: My blog where I talk about ML, Data and Distributed Systems
 markdown: kramdown
 kramdown:
   math_engine: katex
