@@ -1,5 +1,9 @@
-name: Rahul Dubey, Machine Learning Engineer
+# name: Rahul Dubey, Machine Learning Engineer
 title: Rahul Dubey's Blog
+email: rahuldubey.vjti@gmail.com
+description: Testing page title and description
+url: http://dubeyrahul.github.io
+
 markdown: kramdown
 kramdown:
   math_engine: katex
@@ -16,8 +20,6 @@ plugins:
   - jekyll-github-metadata
 
 # baseurl: ""
-# url: "http://dubeyrahul.github.io"
-# email: rahuldubey.vjti@gmail.com
 
 titles_from_headings:
   enabled:     true
