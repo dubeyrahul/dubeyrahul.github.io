@@ -21,6 +21,7 @@ In this post, I'll talk about `Feature Store`: an essential component of a moder
 
 ### Production ML systems:
 First, let's see what differentiates a real-world production ML systems with ML research prototypes, Kaggle based machine learning competitions, and the projects in ML courses. The distinction is best summarized in the diagram below:
+
 ![ML systems](/assets/images/ML_system.png)
 
 

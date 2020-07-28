@@ -1,29 +1,25 @@
-# name: Rahul Dubey, Machine Learning Engineer
-title: Rahul Dubey's Blog
+title: "Data ML Blog"
 email: rahuldubey.vjti@gmail.com
-description: Testing page title and description
+description: "Rahul's thoughts on data and machine learning"
 url: http://dubeyrahul.github.io
-
+highlighter: rouge
 markdown: kramdown
 kramdown:
-  math_engine: katex
-  input: GFM
-  auto_ids: true
-  hard_wrap: false
+  math_engine: mathjax
   syntax_highlighter: rouge
 permalink: /blog/:year/:month/:day/:title
 theme: minima
-plugins:
-  - jekyll-feed
-  - jekyll-gist
-  - jekyll-octicons
-  - jekyll-github-metadata
-
-# baseurl: ""
-
-titles_from_headings:
-  enabled:     true
-  strip_title: true
-  collections: true
-
-highlighter: rouge
+# plugins:
+#   - jekyll-feed
+#   - jekyll-gist
+#   - jekyll-octicons
+#   - jekyll-github-metadata
+#
+# # baseurl: ""
+#
+# titles_from_headings:
+#   enabled:     true
+#   strip_title: true
+#   collections: true
+#
+# highlighter: rouge
