@@ -53,7 +53,7 @@ For e.g. `Serving Infrastructure` consists of not just the model that is being s
 
 `Feature Store` is thus not just a database for you to store and retrieve your features from. It is also the infrastructure to: create those features, manage metadata around the features, make features discoverable, make it shareable, make it consistently available offline and online, monitor the quality of the features, and in some cases even provide consistent API for performing feature engineering.
 
-Now that we know what a feature store is roughly supposed to do, let's dive into some core problems that Data scientists and ML Engineers face and how a good `Feature Store` can solve those problems.
+Now that we know what a feature store is roughly supposed to do, let's dive into some core problems that Data scientists (DS) and Machine Learning Engineers (MLE) face and how a good `Feature Store` can solve those problems.
 
 #### Feature Consistency
 Feature consistency affects the ML use-cases where predictions are made in real-time, i.e. the predictions are not pre-computed, cached, and served as is without any computation at request time. In real-time serving, we get some request, extract features based on the request, feed it into the model and return the prediction. A fair number of business-driving production use-cases such as: CTR prediction, Search Ranking, Home Feed Ranking, Transaction Fraud Prediction, etc. fall under real-time serving use-case, so this is definitely a problem worth solving. Wait, what exactly is the problem here?
