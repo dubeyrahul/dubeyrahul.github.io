@@ -13,7 +13,7 @@ website:
         href: https://linkedin.com/in/dubeyrahul
 format:
   html:
-    theme: cosmo
+    theme: lux
     css: styles.css
     toc: true
     toc-location: right
