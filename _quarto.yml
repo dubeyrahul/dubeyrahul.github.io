@@ -19,5 +19,6 @@ format:
     toc-location: right
     toc-depth: 6
 
-
+execute:
+  freeze: auto
 
