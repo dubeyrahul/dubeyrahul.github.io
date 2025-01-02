@@ -1,5 +1,5 @@
 ---
-title: "LLMs Part 2: Attention"
+title: "LLMs Part 2: Attention Mechanism"
 author: "Rahul Dubey"
 date: "2024-12-28"
 categories: [ml, deep-learning, llm]
