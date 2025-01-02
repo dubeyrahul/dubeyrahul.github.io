@@ -3,6 +3,8 @@ title: "LLMs Part 2: Attention"
 author: "Rahul Dubey"
 date: "2024-12-28"
 categories: [ml, deep-learning, llm]
+blockquote { background-color: darkgrey;}
+quote { background-color: lightpink;}
 ---
 In this post, I'll dive into the attention mechanism that is one of the key feature of modern LLMs. We'll go over some of the shortcomings of pre-LLM Neural language models such as RNNs and its variants, how attention solves these shortcomings, and how it is implemented in practice. Lastly, we'll discuss what are some computational infrastructure implication of attention mechanism that allows large scale training.
 
@@ -29,6 +31,7 @@ Now that we know that attention mechanism is awesome and helps us build Transfor
 At its core, attention mechanism allows a model to build a contextual representation of each token by incorporating information from surrounding tokens. Attention really means which surrounding tokens the model should pay more attention to. It can be described as analogous to how we read a text: as we read English text from left-to-right, we remember certain words more than the other to understand the meaning of the sentence.
 
 Attention mechanism requires us to understand 3 concepts: Queries, Keys, and Values
+
 1. Query: Query is like a search term and represents the current token that the model is trying to understand
 2. Key: Key is like a database index used to index and search a database. Query is compared to Key to find which tokens to pay more attention to
 3. Values: Value represents the actual input. After determening which keys to pay attention to, we retrieve the values of those tokens in proportion to how relevant their keys were to the query.
@@ -50,23 +53,26 @@ In this naive attention scoring, we have simply taken a dot product of input X w
 #### Self-attention
 Now, let's understand the actual self-attention mechanism with weights that LLMs learn. It is quite similar to the above simplified approach, the only difference being (1) how W is calculated and (2) how W is utilized to get the contextual vector. The rest of the operations remain the same: (1) compute attention scores (2) normalize attention scores (3) weight the input per normalized attention scores to get contextual representation.
 
-**Computing Attention weight**
+##### Computing Attention weight
 
-We ask the LLM to learn 3 matrices: W_Q: Query, W_K: Keys, W_V: Values and these matrices drive the computation of attention scores. Say, we have a token embedding `X1`. First thing we do is, we bring it into `Q's` space by multiplying it with W_Q to get `X1_Q`. Note that to carry out this multiplication, the shape of W_Q should align with `X1`. So if `X1` is of dimension `d`, then `W_Q`'s first (or both) dimension has to be `d`. We will use this `X1_Q`: query vector to search among the `Keys` (similar to a database where a query is evaluated against index keys).
+We ask the LLM to learn 3 matrices: W_Q: Query, W_K: Keys, W_V: Values and these matrices drive the computation of attention scores. Say, we have a token embedding `X1`. First thing we do is, we bring it into `Q's` space by multiplying it with W_Q to get `X1_Q`. To carry out this multiplication, the shape of W_Q should align with `X1`. So if `X1` is of dimension `d`, then `W_Q`'s first (or both) dimension has to be `d`. We will use this `X1_Q`: query vector to search among the `Keys` (similar to a database where a query is evaluated against index keys).
 
 To do this, we compute `keys = X @ W_K` where `X` is input matrix of shape (n_tokens, d) and `W_K` is our Keys matrix of shape (d, d). So we get `keys` matrix of shape (n_tokens, d). Now, we will compare `X1_Q` to each of the rows in `keys` matrix to figure out which other tokens should we pay attention to, which gives us `Attention-scores(X1)` of shape (1, n_tokens), so a score for each token.
 
-`Attention-scores(X1) = X1 dot keys`
+`Attention-scores(X1) = X1.dot(keys)`
 
 We essentially did a weighted brute-force search across all tokens in the sequence to find which other tokens should our token-1 attend to.
 
 Now, we softmax normalize this. However, the trick is to take `Softmax(Attention-scores(X1)/ sqrt(d))`. This is called `scaled-dot-product attention` due to the scaling by `sqrt(d)`. Let's call this `Attention-scores-norm(X1)`.
 
-```
-Reason behind scaling: Say we are taking softmax over 2 elements z1 and z2 and z1 >>> z2. Now, when we calculate a softmax e^z1 >>>>>> e^z2. Therefore, softmax for z1 will tend to become 1 and softmax for z2 will tend to become 0. This leads to softmax function becoming a step function whose gradients are not well-defined and are nearly close to 0.
+::: {.callout-note}
+**Reason behind scaling:**
+
+Say we are taking softmax over 2 elements z1 and z2 and z1 >>> z2. Now, when we calculate a softmax e^z1 >>>>>> e^z2. Therefore, softmax for z1 will tend to become 1 and softmax for z2 will tend to become 0. This leads to softmax function becoming a step function whose gradients are not well-defined and are nearly close to 0.
 
 Now imagine our context-vectors of 1000s of dimensions whose dot product can grow very large. These large dot products run into the same issue as mentioned above. So, to avoid this learning problem during training, we divide the attention scores (dot products) by sqrt(d) (I am guessing a heuristic) and then take a softmax.
-```
+:::
+
 Ok, let's get back! We have the attention-scores normalized. Now, all we have to do is multiply this with "something" to get contextual representation of `X1`.
 
 To compute this "something", we use the W_V matrix. We compute `values = X @ W_V` to get a matrix of shape (n_tokens, d). These represent the value of each token in d-dimensional space. Now, we can multiply the attention scores with values:
@@ -75,10 +81,12 @@ To compute this "something", we use the W_V matrix. We compute `values = X @ W_V
 
 We computed the context vector of just `X1` but we can compute this for all tokens at once using matrix multiplication. These computations can also be parallelized and sped up on GPUs, making attention/transformers such an attractive architecture in modern DL systems.
 
-```
-Let X be our input token sequence of shape (N, d1). We can initialize W_K, W_Q, W_V of shape (d1, d2). Our context vector will be of dimension d2.
-Step 1: Project into K,V,Q:
+```bash{style="background-color:lightsteelblue"}
+Let X be our input token sequence of shape (N, d1). 
+We can initialize W_K, W_Q, W_V of shape (d1, d2). 
+Our context vector will be of dimension d2.
 
+Step 1: Project into K,V,Q:
 keys = X @ W_K                                                  # (N, d2)
 queries = X @ W_Q                                               # (N, d2)
 values = X @ W_V                                                # (N, d2)
@@ -97,7 +105,8 @@ Now, let's create a type of attention that is used in decoder-only architecture:
 This is called `Causal attention` or `Masked attention`. Causal because we are only relying on previous tokens to predict next tokens so we are saying that the previous tokens causes the next token. I am not sure whether this can be really be called causal from a `causal inference` standpoint. It is also called Masked because we are masking tokens appearing after the current token so that we only attend to tokens occurring before the current token.
 
 We can create a 2D matrix which looks like this:
-```
+
+```bash{style="background-color:lightsteelblue"}
 [1,0,0,0]
 [1,1,0,0]
 [1,1,1,0]
@@ -107,8 +116,9 @@ It's a lower-triangular matrix (diagonal and below are 1, rest are 0). It is obv
 
 So, we carry out our attention computation like before, only before we multiply scores with values, we apply this mask so that all the attention-scores after our current token are zeroed-out. We then normalize this masked-attention-score and multiply it with values, and voila! We have causal attention scores for each token!
 
-```
-Let M be the mask matrix of shape (n, n) where all elements on and below the diagonal are 1, rest are 0.
+```bash{style="background-color:lightsteelblue"}
+Let M be the mask matrix of shape (n, n) 
+where all elements on and below the diagonal are 1, rest are 0.
 
 Step 2: Compute scaled dot-product attention scores and mask it
 attention_scores = queries @ keys.T                                         # (N, N)
@@ -122,8 +132,10 @@ Step 3: same as before
 context_x = attention_scores_norm_scaled @ values                           # (N, d2)
 ...
 ```
+
 A slightly better approach would be to think about what softmax does. It performs e^x for each x and divides by sum of each e^x. So, if we set x=-inf, then e^x will automatically be 0. Hence, instead of creating a maxk of 1s and 0s, we can creating a mask of 1s and -inf
-```
+
+```bash{style="background-color:lightsteelblue"}
 Step 2: Compute scaled dot-product attention scores and mask it
 M = torch.tril(torch.ones(n, n))
 attenion_scores_masked = attention_scores.masked_fill(~mask.bool(), -torch.inf) # replace the 0s (with ~mask.bool) with -inf
@@ -132,16 +144,19 @@ attention_scores_norm_scaled = softmax(attention_scores_norm / sqrt(d1))    # (N
 Step 3: same as before
 context_x = attention_scores_norm_scaled @ values                           # (N, d2)
 ```
-Note:
-1. We mask before we normalize, because we want to ensure that attention-scores that are multiplied with values sum to 1.
+
+::: {.callout-note}
+1. We mask before we normalize, because we want to ensure that attention-scores that are multiplied with values sum to 1.  
 2. We are still doing things for the entire sequence in parallel by leveraging matrix-multiplication: we still have the same advantages of parallelization that we had in self-attention.
+:::
 
 Another common operation that is done at this point is applying Dropout to introduce regularization. So the process becomes:
+
 1. Compute attention scores
 2. Apply causal mask
-4. Softmax with scaling based on d_out
-5. **Apply dropout** (attention weights get scaled by 1 / (1 - dropout_rate) to ensures that rows sum to ~1. For instance, if a particular attention weight is 0.3 before dropout, and dropout is 0.2, the new value after applying dropout will be 0 if that attention weight is dropped, or 0.3 * 1.25 = 0.375 if it is not dropped. The sum of the weights over all inputs may not be exactly 1. This scaling is implemented in Dropout layer and is not specific to Attention, that's just how Dropout works during training, so that during inference we don't have to do any scaling.)
-6. Compute attention-weighted values
+3. Softmax with scaling based on d_out
+4. **Apply dropout** (attention weights get scaled by 1 / (1 - dropout_rate) to ensures that rows sum to ~1. For instance, if a particular attention weight is 0.3 before dropout, and dropout is 0.2, the new value after applying dropout will be 0 if that attention weight is dropped, or 0.3 * 1.25 = 0.375 if it is not dropped. The sum of the weights over all inputs may not be exactly 1. This scaling is implemented in Dropout layer and is not specific to Attention, that's just how Dropout works during training, so that during inference we don't have to do any scaling.)
+5. Compute attention-weighted values
 
 #### Multi-headed attention
 Conceptually, multi-headed attention is just the above attention mechanism split into "multiple heads". Imagine that we want to create a d_out dimensional context vector. We can split this d_out into n_heads where each head is an attention block of d_head = d_out // n_heads. The intuition is that we will train each head **independently** and the model will learn specific and unique features in each head. It is kind of similar to CNN filters where the idea is that each filter is trained independently and each filter learns something specific and unique about the images. In CNNs, we get one filter that learns edges, another may learn gradients, and so on. In LLMs with multiple-attention heads, we may get one head focusing on syntactic structure, another focus on semantic relationship, and so on. Check out the [BertViz](https://github.com/jessevig/bertviz) tool for a visualization of attention heads.
@@ -151,17 +166,23 @@ Note that, multiple heads is not merely a single massive attention split into mu
 One may ask, why not stack attention heads vertically on top of each other rather than next to each other? One neat advantage is that we can achieve similar learning capacity with less cost by laying them out horizontally since it is a single W matrix to learn instead of sequentially learning separate W matrices for each layer.
 
 Implementation wise, one can essentially create multiple Causal Attention modules and put them in a list such as and compute each head sequentially:
+
+```bash{style="background-color:lightsteelblue"}
+# 3 headed causal-attention (CA=causal attention)
+MultiHeadedAttentionList = concatenate([CA1, CA2, CA3]) 
 ```
-MultiHeadedAttentionList = concatenate([CA1, CA2, CA3]) # 3 headed causal-attention (CA=causal attention)
-```
+
 However, we can again parallelize this and leverage GPUs to speed things up. Trick to parallelization: stuff it in a matrix such that each head still operates independently but gets computed in parallel.
+
+```bash{style="background-color:lightsteelblue"}
+# where each CA is laid out next to each other
+MultiHeadedAttention = [CA1_CA2_CA3] 
 ```
-MultiHeadedAttention = [CA1_CA2_CA3] # where each CA is laid out next to each other
-```
+
 The implementation below is taken from [LLM from Scratch](https://github.com/rasbt/LLMs-from-scratch/blob/bb31de89993441224e9005926dedad95395bb058/ch03/01_main-chapter-code/multihead-attention.ipynb)
 In addition to having multiple-heads, we will also introduce a batch dimension so that we are not passing 1 sequence at a time but a batch of sequences. This way we can fully utilize the GPUs!
 
-```python
+```python{style="background-color:lightsteelblue"}
 class MultiHeadedAttention(nn.Module):
     def __init__(self, d_in, d_out, context_length, dropout, num_heads, qkv_bias=False):
         super().__init__()
