@@ -160,7 +160,8 @@ MultiHeadedAttention = [CA1_CA2_CA3] # where each CA is laid out next to each ot
 ```
 The implementation below is taken from [LLM from Scratch](https://github.com/rasbt/LLMs-from-scratch/blob/bb31de89993441224e9005926dedad95395bb058/ch03/01_main-chapter-code/multihead-attention.ipynb)
 In addition to having multiple-heads, we will also introduce a batch dimension so that we are not passing 1 sequence at a time but a batch of sequences. This way we can fully utilize the GPUs!
-```
+
+```python
 class MultiHeadedAttention(nn.Module):
     def __init__(self, d_in, d_out, context_length, dropout, num_heads, qkv_bias=False):
         super().__init__()
