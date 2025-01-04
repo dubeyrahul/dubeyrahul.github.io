@@ -3,8 +3,6 @@ title: "LLMs Part 2: Attention Mechanism"
 author: "Rahul Dubey"
 date: "2024-12-28"
 categories: [ml, deep-learning, llm]
-blockquote { background-color: darkgrey;}
-quote { background-color: lightpink;}
 ---
 In this post, I'll dive into the attention mechanism that is one of the key feature of modern LLMs. We'll go over some of the shortcomings of pre-LLM Neural language models such as RNNs and its variants, how attention solves these shortcomings, and how it is implemented in practice. Lastly, we'll discuss what are some computational infrastructure implication of attention mechanism that allows large scale training.
 
