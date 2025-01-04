@@ -50,9 +50,7 @@ Dropout on the other hand stochastically squishes neurons to 0.
 The idea behind GeLU (Gaussian Error Linear Unit) is to do something between Dropout and ReLU. It does not squish all negative values to 0 and also does not randomly drop neurons. 
 GeLU uses the fact that inputs are distributed normally (due to normalization techniques seen above). It then uses a CDF of this normal distribution and the value of the input to stochastically determine whether to drop a keep this input.
 
-GeLU has a higher probability of dropping a neuron (multiplying by 0) while x decreases since CDF(x) will be small for smaller values. That's how we get a combination of dropout and ReLU.
-
-In practice, we don't want to compute CDF so we use an [approximation of GeLU](https://paperswithcode.com/method/gelu):
+GeLU has a higher probability of dropping a neuron (multiplying by 0) while x decreases since CDF(x) will be small for smaller values. That's how we get a combination of dropout and ReLU. Below is the exact mathematical form of [GeLU](https://paperswithcode.com/method/gelu).
 
 <math xmlns="http://www.w3.org/1998/Math/MathML" display="block">
   <mtext>GELU</mtext>
@@ -108,7 +106,61 @@ In practice, we don't want to compute CDF so we use an [approximation of GeLU](h
   </mrow>
   <mo>,</mo>
 </math>
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mi>X</mi>
+  <mo>&#x223C;</mo>
+  <mrow>
+    <mi data-mjx-variant="-tex-calligraphic" mathvariant="script">N</mi>
+  </mrow>
+  <mo stretchy="false">(</mo>
+  <mn>0</mn>
+  <mo>,</mo>
+  <mn>1</mn>
+  <mo stretchy="false">)</mo>
+</math>
 
+In practice, we might not want to compute CDF so we use an [approximation of GeLU](https://paperswithcode.com/method/gelu):
+
+<math xmlns="http://www.w3.org/1998/Math/MathML">
+  <mn>0.5</mn>
+  <mi>x</mi>
+  <mrow data-mjx-texclass="INNER">
+    <mo data-mjx-texclass="OPEN">(</mo>
+    <mn>1</mn>
+    <mo>+</mo>
+    <mi>tanh</mi>
+    <mo data-mjx-texclass="NONE">&#x2061;</mo>
+    <mrow data-mjx-texclass="INNER">
+      <mo data-mjx-texclass="OPEN">[</mo>
+      <msqrt>
+        <mn>2</mn>
+        <mrow>
+          <mo>/</mo>
+        </mrow>
+        <mi>&#x3C0;</mi>
+      </msqrt>
+      <mrow data-mjx-texclass="INNER">
+        <mo data-mjx-texclass="OPEN">(</mo>
+        <mi>x</mi>
+        <mo>+</mo>
+        <mn>0.044715</mn>
+        <msup>
+          <mi>x</mi>
+          <mrow>
+            <mn>3</mn>
+          </mrow>
+        </msup>
+        <mo data-mjx-texclass="CLOSE">)</mo>
+      </mrow>
+      <mo data-mjx-texclass="CLOSE">]</mo>
+    </mrow>
+    <mo data-mjx-texclass="CLOSE">)</mo>
+  </mrow>
+</math>
+
+::: {.callout-note}
+PyTorch provides both the exact and approximation with tanh version in its implementation
+:::
 So, our feedforward part of transformer becomes a regular MLP with non-linearities introduced by GeLU.
 
 #### Skip connections
