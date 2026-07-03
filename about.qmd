@@ -1,16 +1,24 @@
 ---
-title: "About"
+title: "Rahul Dubey"
+subtitle: "Machine Learning Engineer"
 image: profile.jpg
 about:
-  template: jolla
+  template: trestles
+  image-shape: round
+  image-width: 12em
   links:
     - icon: linkedin
       text: LinkedIn
-      href: https://linkedin.com
+      href: https://www.linkedin.com/in/rvdubey/
     - icon: github
-      text: Github
-      href: https://github.com
-
+      text: GitHub
+      href: https://github.com/dubeyrahul/
 ---
 
-A place to put down my thoughts on Python, Machine Learning, AI, and Distributed Systems.
+I'm a machine learning engineer based in New York, working on the systems that decide what people see — ranking, search, and recommendations. I'm currently a Senior ML Engineer at Patreon.
+
+I've spent my career building production ML across Patreon, Amazon, Lyft, and Yelp: learned ranking models, large-scale search, LLM-powered features, and the data and serving infrastructure that holds it all together. I'm most at home in the space where machine learning, software engineering, and data engineering overlap — turning research ideas into systems that actually ship and move the metrics that matter.
+
+This blog is where I think out loud. I write deep, from-scratch explanations of the things I'm building and learning: LLM internals, ML systems design, and the craft of writing good Python — the kind of posts I wish I'd had when I was first figuring these things out.
+
+If something here is useful, or you'd like to talk shop, reach out on [LinkedIn](https://www.linkedin.com/in/rvdubey/) or [GitHub](https://github.com/dubeyrahul/).

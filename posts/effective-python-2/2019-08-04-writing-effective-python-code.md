@@ -5,7 +5,7 @@ date: "2019-08-04"
 categories: [python]
 ---
 
-This is the second post ([here's the first]({% post_url 2019-08-03-writing-pythonic-code %})) on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.
+This is the second post ([here's the first](../effective-python-1/2019-08-03-writing-pythonic-code.md)) on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.
 
 ### Writing effective Python code
 #### Slicing
@@ -64,7 +64,7 @@ a = [1, 2, 3, 4, 5, 6, 7, 8]
 # Method 1: Using for loop
 even_squares = []
 for elem in a:
-    even_squares.add(elem*elem)
+    even_squares.append(elem*elem)
 # Method 2: Using map()
 even_squares = map(lambda x: x*x, a)
 
@@ -80,9 +80,9 @@ Say you want to compute squares of all even numbers in the list, then the above 
 even_squares = []
 for elem in a:
 	if elem % 2 == 0:
-   		even_squares.add(elem*elem)	        
+   		even_squares.append(elem*elem)	        
 # Method 2: Using map()
-even_squares = map(lambda x: x*x, filter(lambda x: x % 2 == 0, a)
+even_squares = map(lambda x: x*x, filter(lambda x: x % 2 == 0, a))
 # Method 3: Using list comprehension
 even_squares = [x*x for x in a if x % 2 == 0]
 ```
@@ -99,13 +99,13 @@ Note: list comprehension syntax can be applied to `set` and `dict` as well.
 # Method 1: Using list comprehension:
 flat = [x for level_1 in matrix
 		 for level_2 in level_1
-		 for x in level_3]
+		 for x in level_2]
 
 # Method 2: Using for loops:
 flat = []
 for level_1 in matrix:
-	for level_2 in matrix:
-		flat.extend(level_2
+	for level_2 in level_1:
+		flat.extend(level_2)
 ```
 
 It seems pretty clear that for-loop is more readable here and less confusing too.
@@ -117,7 +117,7 @@ It seems pretty clear that for-loop is more readable here and less confusing too
 # let dataset.txt contain 1M rows. Then,
 file_name = 'dataset.csv'
 output_value = [parse_and_extract_features(x) for x in open(file_name)]
-output_file = open('output.csv', w)
+output_file = open('output.csv', 'w')
 output_file.write(output_value)
 # output_value will be a list of 1M items and we want to write it to a new file
 ```
@@ -132,7 +132,7 @@ def genexp_extract_features(file_name):
 	    yield parse_and_extract_features(row)
 file_name = 'dataset.csv'
 output_generator = genexp_extract_features(file_name)
-output_file = open('output.csv', w)
+output_file = open('output.csv', 'w')
 for output_value in output_generator:
 	output_file.write(output_value)
 ```
@@ -140,7 +140,7 @@ for output_value in output_generator:
 
 By using generator, we do not create a list of 1M items in memory and instead generate feature for one row at a time by creating output_generator object and then iterating over it. Note, we can iterate over genexp like this because essentially they are like iterators. 		
 
-* In conclusion, generator expresssions are a more general form of list comprehension. They are also more efficient because they do not create the entire list in memory. Instead genexp (in short) evaluates to an iterator, that can be used to generate the result-list, one item at a time by calling next() on the evaluated iterator. In the above example, we could use genexp instead of list comprehension to evaluate and write one line at a time to the transformed_dataset file.
+* In conclusion, generator expressions are a more general form of list comprehension. They are also more efficient because they do not create the entire list in memory. Instead genexp (in short) evaluates to an iterator, that can be used to generate the result-list, one item at a time by calling next() on the evaluated iterator. In the above example, we could use genexp instead of list comprehension to evaluate and write one line at a time to the transformed_dataset file.
 * One thing to keep in mind is that genexp evaluates to iterators and once you call next() on it, that result is evaluated and returned and that value cannot be obtained again.
 
 #### Looping effectively

@@ -21,7 +21,7 @@ After I joined Yelp as Machine Learning Engineer, my Python knowledge and skills
 
 I'll try to write two kinds of blog posts: one will be a summary of what I learned from each chapter of [Effective Python](https://effectivepython.com/) and the other will be a deep dive in some topic that I found important or interesting.
 
-This post lists and explains my learnings from Chapter 1 : Pythonic Thinking, [Effective Python](https://effectivepython.com/). Most examples are borrowed from the book. I **strongly** encourange folks to get this Python book!
+This post lists and explains my learnings from Chapter 1 : Pythonic Thinking, [Effective Python](https://effectivepython.com/). Most examples are borrowed from the book. I **strongly** encourage folks to get this Python book!
 
 In this post, we'll only cover aspects of writing clean and readable Python code and in the subsequent Python posts, we'll dive deeper into writing effective and efficient Python code.
 
@@ -80,9 +80,9 @@ This allows you to separate out a complex dictionary reading, write a testable p
 Your code may be processed by a machine but it will be read and consumed repeatedly by humans, so be nice to your fellow species. As the author of Python, Guido van Rossum said:
 >  **Code is read much more often than it is written.**
 
-There's a lot that goes into maximizing readibility: organizing imports, using blank lines and spaces at the right places, writing helper functions to remove complicated code blocks, write helpful meaningful comments and docstrings, etc. Best suggestion is to go over PEP-8 style guide document.
+There's a lot that goes into maximizing readability: organizing imports, using blank lines and spaces at the right places, writing helper functions to remove complicated code blocks, write helpful meaningful comments and docstrings, etc. Best suggestion is to go over PEP-8 style guide document.
 * **What is PEP8?**
-	* [PEP8](https://www.python.org/dev/peps/pep-0008/) is basically the official Python coding convention guide; to improve the readability and estabilish consistency of Python code
+	* [PEP8](https://www.python.org/dev/peps/pep-0008/) is basically the official Python coding convention guide; to improve the readability and establish consistency of Python code
 	* It primarily describes how to neatly lay out the code, use whitespaces and commenting. It also dives into naming conventions and some general programming recommendations to keep in mind, some of which will be highlighted here.
 	* I strongly recommend people to at least give PEP8 a light read, and try to remember the important conventions. But as the authors themselves say, use your best judgement in deciding when to be inconsistent with the PEP8 guide. I like to keep this quote in mind from the PEP8 guide:  
 
@@ -104,11 +104,11 @@ There's a lot that goes into maximizing readibility: organizing imports, using b
 	* Always put import statements at top and use absolute import names. For example:
 	use `from foo import bar` instead of  
 	`import bar`
-	* Organize imports: standard library modules, then 3rd party modules, then own modulels. All of them in alphabetical order in their own group.
+	* Organize imports: standard library modules, then 3rd party modules, then own modules. All of them in alphabetical order in their own group.
 	* Now that's a lot to keep in mind, do I focus on coding or do I practice the so-called Pythonic principles. Well, fear not, because Pylint is here.  
 
 * **What is Pylint tool?**  
-	* Well, first of all we should know what is `lint/linter`. It is basically a piece of software or a tool that performs static analysis on your code for programming bugs, stylistic errors, and symantic discrepancies.
+	* Well, first of all we should know what is `lint/linter`. It is basically a piece of software or a tool that performs static analysis on your code for programming bugs, stylistic errors, and semantic discrepancies.
 	* [Pylint](https://www.pylint.org/) is one such popular tool for Python. It helps you follow PEP-8 conventions without remembering them all, especially for length of a line of code, variable naming convention, import organization, unused imports/variables, some basic error detection. One can also customize Pylint based on what conventions they do/do not want to follow by modifying your `pylintrc` file
 	* Simplest way of using Pylint is to run  `pylint your_python_file.py`
 	* Pylint can be configured in your [IDE](https://kirankoduru.github.io/python/pylint-with-pycharm.html), which is awesome so that while developing itself you can take care of writing clean readable Python code
@@ -118,4 +118,4 @@ There's a lot that goes into maximizing readibility: organizing imports, using b
 	* Refer [this](https://jeffknupp.com/blog/2016/12/09/how-python-linters-will-save-your-large-python-project/) helpful article on incorporating linters in your build process if you are creating a new service or a large project in Python.
 
 ## Conclusion
-In this post, we saw several techniques to make your code more Pythonic, more readable, clear, and concise. We learned that we can apply most of these techniques by using automated tools and make our code more Pythonic. In the [next post](/blog/2019/08/04/writing-effective-python-code) we'll go over writing effective Python code.
+In this post, we saw several techniques to make your code more Pythonic, more readable, clear, and concise. We learned that we can apply most of these techniques by using automated tools and make our code more Pythonic. In the [next post](../effective-python-2/2019-08-04-writing-effective-python-code.md) we'll go over writing effective Python code.

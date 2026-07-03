@@ -1,14 +1,36 @@
 ---
-title: "Posts"
+pagetitle: "Rahul Dubey — ML Engineer"
+description: "Machine learning engineer writing about ML systems, LLMs, and Python."
+toc: false
 listing:
+  id: post-listing
   contents: posts
   sort: "date desc"
   type: default
   categories: true
   sort-ui: false
   filter-ui: false
-page-layout: full
-title-block-banner: true
+  fields: [date, title, description, categories, reading-time]
 ---
 
+:::: {.hero}
+![](profile.jpg){.hero-img fig-alt="Rahul Dubey"}
 
+# Rahul Dubey
+
+::: {.lead}
+Machine learning engineer building ranking, search, and recommendation systems.
+I write from-scratch explainers on ML systems, LLM internals, and the craft of writing good Python.
+:::
+
+[About me](about.qmd){.btn .btn-primary role="button"}
+[GitHub](https://github.com/dubeyrahul/){.btn .btn-outline-secondary role="button"}
+[LinkedIn](https://www.linkedin.com/in/rvdubey/){.btn .btn-outline-secondary role="button"}
+::::
+
+<hr class="hero-divider">
+
+## Writing
+
+::: {#post-listing}
+:::

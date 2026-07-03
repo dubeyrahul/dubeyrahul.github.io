@@ -3,3 +3,6 @@ _site/
 /_site/
 docs/
 scratch/
+
+# Local-only working notes (do not commit/push)
+CLAUDE.md

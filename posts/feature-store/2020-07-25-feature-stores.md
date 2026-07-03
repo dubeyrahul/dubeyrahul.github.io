@@ -32,7 +32,7 @@ In this post, I want to dive into a specific piece of infrastructure that deals 
 
 There are many more such questions that need to be answered about the data goes into your ML models, and the models that power your business. Hence, there is a need for good tooling and infrastructure around features. `Feature Store` is a relatively new infrastructure solution to answer these questions. Though there are not a lot of mainstream solutions out there, big tech companies in ML space have built some custom infrastructure for this.
 
-Note: There are now companies like [Tecton](tecton.ai) and [Hopsworks](hopsworks.ai) who offer end-to-end enterprise grade solutions.
+Note: There are now companies like [Tecton](https://www.tecton.ai/) and [Hopsworks](https://www.hopsworks.ai/) who offer end-to-end enterprise grade solutions.
 
 ### Feature Store
 From the name it may seem like, we are building a data-store that stores our features, but it is much more than that. Below is a slide taken from [Tecton's talk](https://www.youtube.com/watch?v=ZXkra9jiCU0) to highlight (red boxes) the components that a good feature store will manage.
@@ -79,7 +79,7 @@ Airbnb via Zipline provides an efficient way to perform backfill for different t
 
 That sounds like sci-fi but it basically means, given a point of time in the past, what was the value of this particular feature at that point of time. DS/MLE often need this to create their dataset where they use existing labels at different point in time and collect historical aggregates from past until this point-in-time to create the ML models. Getting this right is really important to avoid label leakage.
 
-This is often not available in traditional DB solutions unless for each schema that contains our features, we add an event-time column. And one can image this data growing to be super large to be stored in a traditional DB.
+This is often not available in traditional DB solutions unless for each schema that contains our features, we add an event-time column. And one can imagine this data growing to be super large to be stored in a traditional DB.
 
 A more appropriate solution in this case is storing your snapshot or changelogs partitioned by time on Datalake. So we can store all the updates partitioned by date/time and we can write Spark/SQL queries on top of it to answer question such as: what was the average rating given by this user from January 2020 to March 2020.
 
@@ -137,7 +137,7 @@ In addition, we can build APIs on top of this metadata database to easily get an
 #### Data governance
 An often ignored aspect is data governance, i.e. having some security and monitoring layer on top of your features. Who has access to what should be controlled especially if you are a global business and working in environments with different restrictions (for e.g. using health data). This is also necessary to manage SI data.
 
-Some data governance solutions provide profiling and cataloging capabilities such that different governance policies can be applied to different levels of sensitive data. Regular audits, quality checks, and monitoring is also a part of data governance. Lastly, encryption, data masking, and deletion of some data can also an important aspect especially if these data can introduce harmful bias in your ML systems.
+Some data governance solutions provide profiling and cataloging capabilities such that different governance policies can be applied to different levels of sensitive data. Regular audits, quality checks, and monitoring is also a part of data governance. Lastly, encryption, data masking, and deletion of some data can also be an important aspect especially if these data can introduce harmful bias in your ML systems.
 
 ### Conclusion
 This was a lot to take I imagine. But that's because the problem of feature and data management in ML systems is not trivial. Above mentioned are only some of the main issues that slow down the iteration speed of organization to ship ML-based products. A well-maintained feature-store infrastructure comes a long way to shorten the ML lifecycle and make DS/MLE productive. It makes the life of DS/MLE easy by allowing them to focus on translating business use-cases to well-defined ML problems, perform feature engineering, build models, and deploy it without a lot of hassle.

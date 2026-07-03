@@ -3,6 +3,7 @@ title: "LLMs Part 3: Making a Transformer block"
 author: "Rahul Dubey"
 date: "2024-12-28"
 categories: [ml, deep-learning, llm]
+draft: true
 ---
 ### A Transformer block
 In part 2 we saw the Multi-head attention module which combines multiple attention heads and computes them in parallel. Though that is a key part of what makes a Transformer, there are other key components which are neat inventions or tricks from the past re-used to make Transformers as effective as possible. Note here that I am focusing on GPT-like decoder architecture.
@@ -22,7 +23,7 @@ The primary reason to do this is to stabilize training and avoid exploding or va
 ##### Layer Normalization v/s Batch Normalization
 One might wonder, don't we have a batch normalization technique? Why don't we use that instead of creating a new normalization technique? First, as the name suggests, batch normalization normalizes each input in the entire batch to have mean of 0 and variance of 1, whereas layer normalization normalizes each input independently. Say, we have a batch Y of y_i, batch size=N. Each y_i has say J features, then batch normalization gathers each feature f_j from the entire batch, giving us N values of feature f_j. We then compute mean/variance and normalize f_j. There is a subtle difference in this process v/s layer normalization.
 
-When we have to use varying batch sizes (distributed training) or small batch sizes (in case of LLMs which are very big, sometimes we cannot fit a large number of examples in a batch due to resource constraints), layer normalization provides a better performance because on small batch sizes. A good heuristic/practice in industry is to use Batch normalization for CNNs and when one can fit a large number of samples in a batch and use Layer normalization for RNNs/Transformers where batch size may vary or batch size is small.
+When we have to use varying batch sizes (distributed training) or small batch sizes (in case of LLMs which are very big, sometimes we cannot fit a large number of examples in a batch due to resource constraints), layer normalization provides better performance on small batch sizes. A good heuristic/practice in industry is to use Batch normalization for CNNs and when one can fit a large number of samples in a batch and use Layer normalization for RNNs/Transformers where batch size may vary or batch size is small.
 
 ##### Scale and Shift
 Another thing to mention are the scale and shift parameters. Scale and shift are learnable parameters that change the output of layer normalization. Say N(x) is output of a layer once it is normalized , γ=scale and β=shift, then the final output of layer normalization L(x) = γ * N(x) + β. 
@@ -36,7 +37,7 @@ In the original transformer model, layer normalization was applied after the sel
 
 #### Feedforward with GeLU
 After the inputs go through Multi-head attention and Layer Normalization, we feed them through feedforward layers with non-linearity. There are 2 main reasons to do it:
-1. Position-based transformations: Attention blocks learns relationship between input tokens, but does not focus as much on each token independently. Feedforward layers do that. They process and transform each token independently and does not explicitly consider their relationship to each other during linear transformations.
+1. Position-based transformations: Attention blocks learn relationship between input tokens, but do not focus as much on each token independently. Feedforward layers do that. They process and transform each token independently and do not explicitly consider their relationship to each other during linear transformations.
 2.  Non-linearity: Attention blocks do not perform any non linearity, they essentially do large matrix multiplications with Linear layers, but no non-linearity is introduced. Feedforward layers introduce non-linearity with techniques such as GeLU.
 3.  Increasing model capacity: Feedforward layers also have much larger hidden dimensions compared to the embedding dimension that our LLM is trying to learn, so we get increased model capacity
 
@@ -48,7 +49,7 @@ ReLU is pretty straightforward to understand. It squishes all negative values to
 Dropout on the other hand stochastically squishes neurons to 0.
 
 The idea behind GeLU (Gaussian Error Linear Unit) is to do something between Dropout and ReLU. It does not squish all negative values to 0 and also does not randomly drop neurons. 
-GeLU uses the fact that inputs are distributed normally (due to normalization techniques seen above). It then uses a CDF of this normal distribution and the value of the input to stochastically determine whether to drop a keep this input.
+GeLU uses the fact that inputs are distributed normally (due to normalization techniques seen above). It then uses a CDF of this normal distribution and the value of the input to stochastically determine whether to drop or keep this input.
 
 GeLU has a higher probability of dropping a neuron (multiplying by 0) while x decreases since CDF(x) will be small for smaller values. That's how we get a combination of dropout and ReLU. Below is the exact mathematical form of [GeLU](https://paperswithcode.com/method/gelu).
 
@@ -119,6 +120,8 @@ GeLU has a higher probability of dropping a neuron (multiplying by 0) while x de
   <mo stretchy="false">)</mo>
 </math>
 
+
+
 In practice, we might not want to compute CDF so we use an [approximation of GeLU](https://paperswithcode.com/method/gelu):
 
 <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -164,6 +167,18 @@ PyTorch provides both the exact and approximation with tanh version in its imple
 So, our feedforward part of transformer becomes a regular MLP with non-linearities introduced by GeLU.
 
 #### Skip connections
+Skip/Shortcut/Residual all mean the same thing. They originated in CNN based image models like ResNet but since have been used a lot to handle the vanishing gradient problem.
+
+As we grow the number of layers, the steps that a gradient has to travel increases. At each step it gets multiplied with small numbers and reduces in magnitude. So when the gradient arrives at earlier layers, it barely moves the needle (the weights, technically speaking).
+
+To get around this problem, skip connections were introduced. All skip connections do, is add a shortcut path from the input of layer i to input of layer i+1.
+
+Say we have input x, after layer 1, we get f1(x). Now f1(x) becomes input to layer 2 to obtain f2(x), and so on. With skip connections, we add the input back to the output of the layer. 
+Now we have input x, after layer 1, we get f1(x). Now (x + f1(x)) becomes input to layer 2 to obtain f2(x). Now (x+f1(x) + f2(x)) becomes input for layer 3, and so on.
+
+Since we have direct connections with previous layers, the gradient can propagate to them directly as well!
+
+#### Putting it all together
 
 
 

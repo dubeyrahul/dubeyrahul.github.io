@@ -1,24 +1,33 @@
 project:
   type: website
   output-dir: docs
+  render:
+    - "*.qmd"
+    - "posts/"
+    - "!CLAUDE.md"
 
 website:
-  title: "Rahul Dubey's Blog"
+  title: "Rahul Dubey"
+  description: "Machine learning engineer writing about ML systems, LLMs, and Python."
   navbar:
     right:
       - about.qmd
       - icon: github
-        href: https://github.com/
+        href: https://github.com/dubeyrahul/
       - icon: linkedin
-        href: https://linkedin.com/in/dubeyrahul
+        href: https://www.linkedin.com/in/rvdubey/
+  twitter-card: true
+  open-graph: true
+
 format:
   html:
-    theme: lux
-    css: styles.css
+    theme: [cosmo, styles.scss]
+    highlight-style: github
     toc: true
     toc-location: right
     toc-depth: 6
+    grid:
+      body-width: 820px
 
 execute:
   freeze: auto
-

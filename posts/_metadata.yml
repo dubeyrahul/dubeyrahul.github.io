@@ -6,3 +6,8 @@ freeze: true
 
 # Enable banner style title blocks
 title-block-banner: true
+
+# Append the author bio card to the end of every post
+format:
+  html:
+    include-after-body: _author-card.html

@@ -4,10 +4,10 @@ author: "Rahul Dubey"
 date: "2024-12-28"
 categories: [ml, deep-learning, llm]
 ---
-In this post, I'll dive into the attention mechanism that is one of the key feature of modern LLMs. We'll go over some of the shortcomings of pre-LLM Neural language models such as RNNs and its variants, how attention solves these shortcomings, and how it is implemented in practice. Lastly, we'll discuss what are some computational infrastructure implication of attention mechanism that allows large scale training.
+In this post, I'll dive into the attention mechanism that is one of the key features of modern LLMs. We'll go over some of the shortcomings of pre-LLM Neural language models such as RNNs and its variants, how attention solves these shortcomings, and how it is implemented in practice. Lastly, we'll discuss what are some computational infrastructure implications of attention mechanism that allows large scale training.
 
 ### Neural language models
-Language models are nothing but an ML model tasked with `modeling the language`, simply put we want to learn a probability distribution over the language. We want to be able to predict `P(word | context-words)`. The initial approaches were doing so were very specific to textual data that leveraged the grammar and structure of the language. Next, came statistical approaches such as Naive Bayes / Bag-of-words model. Then we got one of the most impressive and cited paper: [`A Neural Probabilistic Language Model`](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf) where the authors demonstrated how to leverage MLPs to model the language. Next, we got word embedding based model but after MLP the next big advancement came in [`Sequence to Sequence Learning with Neural Networks`](https://arxiv.org/pdf/1409.3215) which proposed LSTMs with encoder-decoder setup to encode and decode sequences and were particularly impressive in tasks such as language translation. For quite a long period, these RNN-variants were the state of the art approach but they suffered from the following issues:
+Language models are nothing but an ML model tasked with `modeling the language`, simply put we want to learn a probability distribution over the language. We want to be able to predict `P(word | context-words)`. The initial approaches for doing so were very specific to textual data that leveraged the grammar and structure of the language. Next, came statistical approaches such as Naive Bayes / Bag-of-words model. Then we got one of the most impressive and cited papers: [`A Neural Probabilistic Language Model`](https://www.jmlr.org/papers/volume3/bengio03a/bengio03a.pdf) where the authors demonstrated how to leverage MLPs to model the language. Next, we got word embedding based model but after MLP the next big advancement came in [`Sequence to Sequence Learning with Neural Networks`](https://arxiv.org/pdf/1409.3215) which proposed LSTMs with encoder-decoder setup to encode and decode sequences and were particularly impressive in tasks such as language translation. For quite a long period, these RNN-variants were the state of the art approach but they suffered from the following issues:
 - unable to model long range dependency
 - slow training due to serial processing of text
 - vanishing and exploding gradients
@@ -32,7 +32,7 @@ Attention mechanism requires us to understand 3 concepts: Queries, Keys, and Val
 
 1. Query: Query is like a search term and represents the current token that the model is trying to understand
 2. Key: Key is like a database index used to index and search a database. Query is compared to Key to find which tokens to pay more attention to
-3. Values: Value represents the actual input. After determening which keys to pay attention to, we retrieve the values of those tokens in proportion to how relevant their keys were to the query.
+3. Values: Value represents the actual input. After determining which keys to pay attention to, we retrieve the values of those tokens in proportion to how relevant their keys were to the query.
 
 In essence, attention mechanism figures out how relevant each key is to the query, and then uses this weight to values to compute contextual representation for the query token.
 
@@ -120,10 +120,10 @@ where all elements on and below the diagonal are 1, rest are 0.
 
 Step 2: Compute scaled dot-product attention scores and mask it
 attention_scores = queries @ keys.T                                         # (N, N)
-attenion_scores_masked = M @ attention_scores                               # (N, N)
+attention_scores_masked = M @ attention_scores                               # (N, N)
 
-# Normalize the attenion_scores_masked so that rows sum to 1
-attention_scores_norm = attenion_scores_masked / sum_of_rows                # (N, N)
+# Normalize the attention_scores_masked so that rows sum to 1
+attention_scores_norm = attention_scores_masked / sum_of_rows                # (N, N)
 attention_scores_norm_scaled = softmax(attention_scores_norm / sqrt(d1))    # (N, N)
 
 Step 3: same as before
@@ -131,12 +131,12 @@ context_x = attention_scores_norm_scaled @ values                           # (N
 ...
 ```
 
-A slightly better approach would be to think about what softmax does. It performs e^x for each x and divides by sum of each e^x. So, if we set x=-inf, then e^x will automatically be 0. Hence, instead of creating a maxk of 1s and 0s, we can creating a mask of 1s and -inf
+A slightly better approach would be to think about what softmax does. It performs e^x for each x and divides by sum of each e^x. So, if we set x=-inf, then e^x will automatically be 0. Hence, instead of creating a mask of 1s and 0s, we can create a mask of 1s and -inf
 
 ```bash{style="background-color:lightsteelblue"}
 Step 2: Compute scaled dot-product attention scores and mask it
 M = torch.tril(torch.ones(n, n))
-attenion_scores_masked = attention_scores.masked_fill(~mask.bool(), -torch.inf) # replace the 0s (with ~mask.bool) with -inf
+attention_scores_masked = attention_scores.masked_fill(~mask.bool(), -torch.inf) # replace the 0s (with ~mask.bool) with -inf
 attention_scores_norm_scaled = softmax(attention_scores_norm / sqrt(d1))    # (N, N)
 
 Step 3: same as before
@@ -153,7 +153,7 @@ Another common operation that is done at this point is applying Dropout to intro
 1. Compute attention scores
 2. Apply causal mask
 3. Softmax with scaling based on d_out
-4. **Apply dropout** (attention weights get scaled by 1 / (1 - dropout_rate) to ensures that rows sum to ~1. For instance, if a particular attention weight is 0.3 before dropout, and dropout is 0.2, the new value after applying dropout will be 0 if that attention weight is dropped, or 0.3 * 1.25 = 0.375 if it is not dropped. The sum of the weights over all inputs may not be exactly 1. This scaling is implemented in Dropout layer and is not specific to Attention, that's just how Dropout works during training, so that during inference we don't have to do any scaling.)
+4. **Apply dropout** (attention weights get scaled by 1 / (1 - dropout_rate) to ensure that rows sum to ~1. For instance, if a particular attention weight is 0.3 before dropout, and dropout is 0.2, the new value after applying dropout will be 0 if that attention weight is dropped, or 0.3 * 1.25 = 0.375 if it is not dropped. The sum of the weights over all inputs may not be exactly 1. This scaling is implemented in Dropout layer and is not specific to Attention, that's just how Dropout works during training, so that during inference we don't have to do any scaling.)
 5. Compute attention-weighted values
 
 #### Multi-headed attention
@@ -163,7 +163,7 @@ Note that, multiple heads is not merely a single massive attention split into mu
 
 One may ask, why not stack attention heads vertically on top of each other rather than next to each other? One neat advantage is that we can achieve similar learning capacity with less cost by laying them out horizontally since it is a single W matrix to learn instead of sequentially learning separate W matrices for each layer.
 
-Implementation wise, one can essentially create multiple Causal Attention modules and put them in a list such as and compute each head sequentially:
+Implementation wise, one can essentially create multiple Causal Attention modules and put them in a list and compute each head sequentially:
 
 ```bash{style="background-color:lightsteelblue"}
 # 3 headed causal-attention (CA=causal attention)
@@ -251,7 +251,7 @@ class MultiHeadedAttention(nn.Module):
         # we need to do a contiguous operation to lay this out in memory in a contiguous manner so that the view works
         context_vec = context_vec.contiguous().view(b, num_tokens, self.d_out)
 
-        # the projection multplication is (b, num_tokens, d_out) @ (d_out, d_out) -> (b, num_tokens, d_out)
+        # the projection multiplication is (b, num_tokens, d_out) @ (d_out, d_out) -> (b, num_tokens, d_out)
         context_vec = self.out_proj(context_vec) # optional projection
         
         # hence, we get context_vec of shape (b, num_tokens, d_out)
