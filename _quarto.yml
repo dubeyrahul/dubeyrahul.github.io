@@ -23,6 +23,8 @@ format:
   html:
     theme: [cosmo, styles.scss]
     highlight-style: github
+    include-in-header:
+      - _includes/goatcounter.html
     toc: true
     toc-location: right
     toc-depth: 6
