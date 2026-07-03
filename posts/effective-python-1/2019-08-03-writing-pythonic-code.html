@@ -9,7 +9,7 @@
 <meta name="author" content="Rahul Dubey">
 <meta name="dcterms.date" content="2019-08-03">
 
-<title>Writing Pythonic Code: Part 1 – Rahul Dubey’s Blog</title>
+<title>Writing Pythonic Code: Part 1 – Rahul Dubey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-08f416a8df102e87d63c61fa93a2f252.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-4968d28af72d4e5a34172c9bc5ef961b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f4efd7ce54f3e21d21eca2fc96c3beb8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +104,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Writing Pythonic Code: Part 1 – Rahul Dubey">
+<meta property="og:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta property="og:site_name" content="Rahul Dubey">
+<meta name="twitter:title" content="Writing Pythonic Code: Part 1 – Rahul Dubey">
+<meta name="twitter:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -115,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Rahul Dubey’s Blog</span>
+    <span class="navbar-title">Rahul Dubey</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -126,15 +131,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Rahul Dubey</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dubeyrahul/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dubeyrahul"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rvdubey/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -213,7 +218,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <p>But all of this changed when I started my graduate studies and started programming extensively in Python (again, the reason being that I was specializing in machine learning). I especially started using NumPy and Scikit-learn a lot, learned a bit about reading and processing large files using generators (and was amazed by it). I wrote some simple closures, wrote some functions that I could pass as parameter to other scikit-learn functions (thereby treating functions as first class objects). But I reached a state where I was doing things very ineffectively and inconsistently. I’d repeat myself a lot, write really complicated list comprehensions, totally forget that generators exist, wouldn’t use closures as effectively as they can be used. Also, I started reading more Python code which made me realize that I need to <strong>relearn</strong> Python and let go of old bad habits.</p>
 <p>After I joined Yelp as Machine Learning Engineer, my Python knowledge and skills improved a lot because of the highest quality of code reviews that I got from my mentor and peers. I learnt many best practices, learnt how to use pytest properly. I am aware that many non-traditional Python programmers who take up Python because it serves their purpose (like Data science/ Machine Learning) do not know the true power and beauty of Python. Hence, I am starting this new blog series to document some important Python principles that I learned from the book <a href="https://effectivepython.com/">Effective Python</a>, and I hope that this could help someone overcome the obstacles that I faced during my long and awkward journey to learning to write effective Python.</p>
 <p>I’ll try to write two kinds of blog posts: one will be a summary of what I learned from each chapter of <a href="https://effectivepython.com/">Effective Python</a> and the other will be a deep dive in some topic that I found important or interesting.</p>
-<p>This post lists and explains my learnings from Chapter 1 : Pythonic Thinking, <a href="https://effectivepython.com/">Effective Python</a>. Most examples are borrowed from the book. I <strong>strongly</strong> encourange folks to get this Python book!</p>
+<p>This post lists and explains my learnings from Chapter 1 : Pythonic Thinking, <a href="https://effectivepython.com/">Effective Python</a>. Most examples are borrowed from the book. I <strong>strongly</strong> encourage folks to get this Python book!</p>
 <p>In this post, we’ll only cover aspects of writing clean and readable Python code and in the subsequent Python posts, we’ll dive deeper into writing effective and efficient Python code.</p>
 </section>
 <section id="writing-clean-python-code" class="level3">
@@ -263,7 +268,7 @@ So, instead of:</p>
 <section id="maximize-readability" class="level4">
 <h4 class="anchored" data-anchor-id="maximize-readability">Maximize readability</h4>
 <p>Your code may be processed by a machine but it will be read and consumed repeatedly by humans, so be nice to your fellow species. As the author of Python, Guido van Rossum said: &gt; <strong>Code is read much more often than it is written.</strong></p>
-<p>There’s a lot that goes into maximizing readibility: organizing imports, using blank lines and spaces at the right places, writing helper functions to remove complicated code blocks, write helpful meaningful comments and docstrings, etc. Best suggestion is to go over PEP-8 style guide document. * <strong>What is PEP8?</strong> * <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> is basically the official Python coding convention guide; to improve the readability and estabilish consistency of Python code * It primarily describes how to neatly lay out the code, use whitespaces and commenting. It also dives into naming conventions and some general programming recommendations to keep in mind, some of which will be highlighted here. * I strongly recommend people to at least give PEP8 a light read, and try to remember the important conventions. But as the authors themselves say, use your best judgement in deciding when to be inconsistent with the PEP8 guide. I like to keep this quote in mind from the PEP8 guide:</p>
+<p>There’s a lot that goes into maximizing readability: organizing imports, using blank lines and spaces at the right places, writing helper functions to remove complicated code blocks, write helpful meaningful comments and docstrings, etc. Best suggestion is to go over PEP-8 style guide document. * <strong>What is PEP8?</strong> * <a href="https://www.python.org/dev/peps/pep-0008/">PEP8</a> is basically the official Python coding convention guide; to improve the readability and establish consistency of Python code * It primarily describes how to neatly lay out the code, use whitespaces and commenting. It also dives into naming conventions and some general programming recommendations to keep in mind, some of which will be highlighted here. * I strongly recommend people to at least give PEP8 a light read, and try to remember the important conventions. But as the authors themselves say, use your best judgement in deciding when to be inconsistent with the PEP8 guide. I like to keep this quote in mind from the PEP8 guide:</p>
 <blockquote class="blockquote">
 <p><strong>Consistency with this style guide is important. Consistency within a project is more important. Consistency within one module or function is the most important.</strong></p>
 </blockquote>
@@ -287,12 +292,12 @@ So, instead of:</p>
 <li>Split long if/for/while statements to multiple lines to improve readability</li>
 <li>Always put import statements at top and use absolute import names. For example: use <code>from foo import bar</code> instead of<br>
 <code>import bar</code></li>
-<li>Organize imports: standard library modules, then 3rd party modules, then own modulels. All of them in alphabetical order in their own group.</li>
+<li>Organize imports: standard library modules, then 3rd party modules, then own modules. All of them in alphabetical order in their own group.</li>
 <li>Now that’s a lot to keep in mind, do I focus on coding or do I practice the so-called Pythonic principles. Well, fear not, because Pylint is here.</li>
 </ul></li>
 <li><strong>What is Pylint tool?</strong>
 <ul>
-<li>Well, first of all we should know what is <code>lint/linter</code>. It is basically a piece of software or a tool that performs static analysis on your code for programming bugs, stylistic errors, and symantic discrepancies.</li>
+<li>Well, first of all we should know what is <code>lint/linter</code>. It is basically a piece of software or a tool that performs static analysis on your code for programming bugs, stylistic errors, and semantic discrepancies.</li>
 <li><a href="https://www.pylint.org/">Pylint</a> is one such popular tool for Python. It helps you follow PEP-8 conventions without remembering them all, especially for length of a line of code, variable naming convention, import organization, unused imports/variables, some basic error detection. One can also customize Pylint based on what conventions they do/do not want to follow by modifying your <code>pylintrc</code> file</li>
 <li>Simplest way of using Pylint is to run <code>pylint your_python_file.py</code></li>
 <li>Pylint can be configured in your <a href="https://kirankoduru.github.io/python/pylint-with-pycharm.html">IDE</a>, which is awesome so that while developing itself you can take care of writing clean readable Python code</li>
@@ -306,12 +311,24 @@ So, instead of:</p>
 </section>
 <section id="conclusion" class="level2">
 <h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>In this post, we saw several techniques to make your code more Pythonic, more readable, clear, and concise. We learned that we can apply most of these techniques by using automated tools and make our code more Pythonic. In the <a href="../../blog/2019/08/04/writing-effective-python-code">next post</a> we’ll go over writing effective Python code.</p>
+<p>In this post, we saw several techniques to make your code more Pythonic, more readable, clear, and concise. We learned that we can apply most of these techniques by using automated tools and make our code more Pythonic. In the <a href="../../posts/effective-python-2/2019-08-04-writing-effective-python-code.html">next post</a> we’ll go over writing effective Python code.</p>
 
 
 </section>
 
 </main> <!-- /main -->
+<div class="author-card">
+  <img src="../../profile.jpg" alt="Rahul Dubey" class="author-card-img">
+  <div class="author-card-body">
+    <div class="author-card-name">Rahul Dubey</div>
+    <p class="author-card-bio">Senior ML Engineer at Patreon, working on ranking, search, and recommendation systems. I write from-scratch explainers on ML systems, LLMs, and writing better Python.</p>
+    <div class="author-card-links">
+      <a href="../../about.html">About</a>
+      <a href="https://github.com/dubeyrahul/">GitHub</a>
+      <a href="https://www.linkedin.com/in/rvdubey/">LinkedIn</a>
+    </div>
+  </div>
+</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

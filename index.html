@@ -6,8 +6,9 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
+<meta name="description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
 
-<title>Posts – Rahul Dubey’s Blog</title>
+<title>Rahul Dubey — ML Engineer – Rahul Dubey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -37,10 +38,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-08f416a8df102e87d63c61fa93a2f252.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-4968d28af72d4e5a34172c9bc5ef961b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-f4efd7ce54f3e21d21eca2fc96c3beb8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -71,20 +72,20 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    const listingTargetEl = window.document.querySelector('#listing-post-listing .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-date','listing-title','listing-description','listing-categories','listing-reading-time',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
       searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+    window['quarto-listings']['listing-post-listing'] = new List('listing-post-listing', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -128,18 +129,27 @@ window.Quarto = {
 };
 </script>
 
-<link rel="stylesheet" href="styles.css">
+<meta property="og:title" content="Rahul Dubey — ML Engineer">
+<meta property="og:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta property="og:image" content="https://dubeyrahul.github.io/profile.jpg">
+<meta property="og:site_name" content="Rahul Dubey">
+<meta property="og:image:alt" content="Rahul Dubey">
+<meta name="twitter:title" content="Rahul Dubey — ML Engineer">
+<meta name="twitter:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta name="twitter:image" content="https://dubeyrahul.github.io/profile.jpg">
+<meta name="twitter:image:alt" content="Rahul Dubey">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Rahul Dubey’s Blog</span>
+    <span class="navbar-title">Rahul Dubey</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -150,15 +160,15 @@ window.Quarto = {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="./about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Rahul Dubey</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dubeyrahul/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dubeyrahul"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rvdubey/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -170,47 +180,33 @@ window.Quarto = {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-page-left">
-      <h1 class="title">Posts</h1>
-                      </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta column-page-left">
-
-      
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        
     <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(5)</span></div><div class="category" data-category="ZGVlcC1sZWFybmluZw==">deep-learning <span class="quarto-category-count">(2)</span></div><div class="category" data-category="ZmVhdHVyZS1zdG9yZQ==">feature-store <span class="quarto-category-count">(1)</span></div><div class="category" data-category="bGxt">llm <span class="quarto-category-count">(2)</span></div><div class="category" data-category="bWw=">ml <span class="quarto-category-count">(3)</span></div><div class="category" data-category="cHl0aG9u">python <span class="quarto-category-count">(2)</span></div></div></div>
 <!-- main -->
-<main class="content quarto-banner-title-block column-page-left" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-
-
-
-
-
-<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="bWwlMkNkZWVwLWxlYXJuaW5nJTJDbGxt" data-listing-date-sort="1735372800000" data-listing-file-modified-sort="1735840109692" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4400">
-<div class="thumbnail">
-<p><a href="./posts/llms/attention-mechanism.html" class="no-external"></a></p><a href="./posts/llms/attention-mechanism.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/llms/attention-mechanism.html" class="no-external"></a></p>
+<div class="hero">
+<p><img src="profile.jpg" class="hero-img img-fluid" alt="Rahul Dubey"></p>
+<section id="rahul-dubey" class="level1">
+<h1>Rahul Dubey</h1>
+<div class="lead">
+<p>Machine learning engineer building ranking, search, and recommendation systems. I write from-scratch explainers on ML systems, LLM internals, and the craft of writing good Python.</p>
 </div>
+<p><a href="./about.html" class="btn btn-primary" role="button">About me</a> <a href="https://github.com/dubeyrahul/" class="btn btn-outline-secondary" role="button">GitHub</a> <a href="https://www.linkedin.com/in/rvdubey/" class="btn btn-outline-secondary" role="button">LinkedIn</a></p>
+</section>
+</div>
+<hr class="hero-divider">
+<section id="writing" class="level2">
+<h2 class="anchored" data-anchor-id="writing">Writing</h2>
+<div id="listing-post-listing" class="quarto-listing quarto-listing-container-default">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="bWwlMkNkZWVwLWxlYXJuaW5nJTJDbGxt" data-listing-date-sort="1735362000000" data-listing-file-modified-sort="1783083752290" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22" data-listing-word-count-sort="4398">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/llms/attention-mechanism.html" class="no-external">LLMs Part 2: Attention Mechanism</a>
@@ -230,7 +226,7 @@ llm
 </div>
 </div>
 <div class="listing-description">
-<a href="./posts/llms/attention-mechanism.html" class="no-external">In this post, I’ll dive into the attention mechanism that is one of the key feature of modern LLMs. We’ll go over some of the shortcomings of pre-LLM Neural language models…</a>
+<a href="./posts/llms/attention-mechanism.html" class="no-external">In this post, I’ll dive into the attention mechanism that is one of the key features of modern LLMs. We’ll go over some of the shortcomings of pre-LLM Neural language models…</a>
 </div>
 </div>
 <div class="metadata">
@@ -238,18 +234,13 @@ llm
 <div class="listing-date">
 Dec 28, 2024
 </div>
-<div class="listing-author">
-Rahul Dubey
+<div class="listing-reading-time">
+22 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="bWwlMkNkZWVwLWxlYXJuaW5nJTJDbGxt" data-listing-date-sort="1735113600000" data-listing-file-modified-sort="1735242765344" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1619">
-<div class="thumbnail">
-<p><a href="./posts/llms/token-embeddings.html" class="no-external"></a></p><a href="./posts/llms/token-embeddings.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/llms/token-embeddings.html" class="no-external"></a></p>
-</div>
+<div class="quarto-post image-right" data-index="1" data-categories="bWwlMkNkZWVwLWxlYXJuaW5nJTJDbGxt" data-listing-date-sort="1735102800000" data-listing-file-modified-sort="1783083857210" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1614">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/llms/token-embeddings.html" class="no-external">LLMs Part 1: Token Embeddings</a>
@@ -277,18 +268,13 @@ llm
 <div class="listing-date">
 Dec 25, 2024
 </div>
-<div class="listing-author">
-Rahul Dubey
+<div class="listing-reading-time">
+9 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="bWwlMkNmZWF0dXJlLXN0b3Jl" data-listing-date-sort="1595660400000" data-listing-file-modified-sort="1735149671113" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3068">
-<div class="thumbnail">
-<p><a href="./posts/feature-store/2020-07-25-feature-stores.html" class="no-external"></a></p><a href="./posts/feature-store/2020-07-25-feature-stores.html" class="no-external">
-<p class="card-img-top"><img src="posts/feature-store/ML_system.png"  class="thumbnail-image card-img"/></p>
-</a><p><a href="./posts/feature-store/2020-07-25-feature-stores.html" class="no-external"></a></p>
-</div>
+<div class="quarto-post image-right" data-index="2" data-categories="bWwlMkNmZWF0dXJlLXN0b3Jl" data-listing-date-sort="1595649600000" data-listing-file-modified-sort="1783084203695" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3069">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/feature-store/2020-07-25-feature-stores.html" class="no-external">Feature Store: an essential part of ML infrastructure</a>
@@ -313,18 +299,13 @@ feature-store
 <div class="listing-date">
 Jul 25, 2020
 </div>
-<div class="listing-author">
-Rahul Dubey
+<div class="listing-reading-time">
+16 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="cHl0aG9u" data-listing-date-sort="1564902000000" data-listing-file-modified-sort="1735149671112" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2251">
-<div class="thumbnail">
-<p><a href="./posts/effective-python-2/2019-08-04-writing-effective-python-code.html" class="no-external"></a></p><a href="./posts/effective-python-2/2019-08-04-writing-effective-python-code.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/effective-python-2/2019-08-04-writing-effective-python-code.html" class="no-external"></a></p>
-</div>
+<div class="quarto-post image-right" data-index="3" data-categories="cHl0aG9u" data-listing-date-sort="1564891200000" data-listing-file-modified-sort="1783084593594" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2248">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/effective-python-2/2019-08-04-writing-effective-python-code.html" class="no-external">Writing Pythonic code: Part 2</a>
@@ -346,18 +327,13 @@ python
 <div class="listing-date">
 Aug 4, 2019
 </div>
-<div class="listing-author">
-Rahul Dubey
+<div class="listing-reading-time">
+12 min
 </div>
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="cHl0aG9u" data-listing-date-sort="1564815600000" data-listing-file-modified-sort="1735782261361" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1886">
-<div class="thumbnail">
-<p><a href="./posts/effective-python-1/2019-08-03-writing-pythonic-code.html" class="no-external"></a></p><a href="./posts/effective-python-1/2019-08-03-writing-pythonic-code.html" class="no-external">
-<div class="listing-item-img-placeholder card-img-top" >&nbsp;</div>
-</a><p><a href="./posts/effective-python-1/2019-08-03-writing-pythonic-code.html" class="no-external"></a></p>
-</div>
+<div class="quarto-post image-right" data-index="4" data-categories="cHl0aG9u" data-listing-date-sort="1564804800000" data-listing-file-modified-sort="1783084202213" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10" data-listing-word-count-sort="1886">
 <div class="body">
 <h3 class="no-anchor listing-title">
 <a href="./posts/effective-python-1/2019-08-03-writing-pythonic-code.html" class="no-external">Writing Pythonic Code: Part 1</a>
@@ -379,8 +355,8 @@ python
 <div class="listing-date">
 Aug 3, 2019
 </div>
-<div class="listing-author">
-Rahul Dubey
+<div class="listing-reading-time">
+10 min
 </div>
 </a>
 </div>
@@ -389,7 +365,13 @@ Rahul Dubey
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div></main> <!-- /main -->
+</div>
+
+
+
+</section>
+
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

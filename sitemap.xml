@@ -1,31 +1,31 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://dubeyrahul.github.io/about.html</loc>
-    <lastmod>2024-12-25T18:01:11.109Z</lastmod>
-  </url>
-  <url>
     <loc>https://dubeyrahul.github.io/posts/llms/token-embeddings.html</loc>
-    <lastmod>2024-12-26T19:52:45.344Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dubeyrahul.github.io/posts/effective-python-1/2019-08-03-writing-pythonic-code.html</loc>
-    <lastmod>2025-01-02T01:44:21.361Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dubeyrahul.github.io/posts/effective-python-2/2019-08-04-writing-effective-python-code.html</loc>
-    <lastmod>2024-12-25T18:01:11.112Z</lastmod>
+    <lastmod>2026-07-03T13:04:17.210Z</lastmod>
   </url>
   <url>
     <loc>https://dubeyrahul.github.io/posts/feature-store/2020-07-25-feature-stores.html</loc>
-    <lastmod>2024-12-25T18:01:11.113Z</lastmod>
-  </url>
-  <url>
-    <loc>https://dubeyrahul.github.io/posts/llms/attention-mechanism.html</loc>
-    <lastmod>2025-01-02T17:48:29.692Z</lastmod>
+    <lastmod>2026-07-03T13:10:03.695Z</lastmod>
   </url>
   <url>
     <loc>https://dubeyrahul.github.io/index.html</loc>
-    <lastmod>2024-12-25T18:01:11.110Z</lastmod>
+    <lastmod>2026-07-03T13:01:56.196Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dubeyrahul.github.io/about.html</loc>
+    <lastmod>2026-07-03T13:02:08.255Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dubeyrahul.github.io/posts/effective-python-2/2019-08-04-writing-effective-python-code.html</loc>
+    <lastmod>2026-07-03T13:16:33.594Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dubeyrahul.github.io/posts/effective-python-1/2019-08-03-writing-pythonic-code.html</loc>
+    <lastmod>2026-07-03T13:10:02.213Z</lastmod>
+  </url>
+  <url>
+    <loc>https://dubeyrahul.github.io/posts/llms/attention-mechanism.html</loc>
+    <lastmod>2026-07-03T13:02:32.290Z</lastmod>
   </url>
 </urlset>

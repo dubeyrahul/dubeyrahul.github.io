@@ -6,10 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Rahul Dubey">
-<meta name="dcterms.date" content="2024-12-25">
 
-<title>LLMs Part 1: Token Embeddings – Rahul Dubey’s Blog</title>
+<title>claude – Rahul Dubey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,22 +23,22 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../">
-<script src="../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-4968d28af72d4e5a34172c9bc5ef961b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed8fcc291f175bbf305f453e5dba9d40.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap-e65c3fd9abd4a3fc0a10fe17755e9a8f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,18 +68,21 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Rahul Dubey">
+<meta property="og:site_name" content="Rahul Dubey">
+<meta name="twitter:title" content="Rahul Dubey">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+  <header id="quarto-header" class="headroom fixed-top">
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Rahul Dubey’s Blog</span>
+    <a class="navbar-brand" href="./index.html">
+    <span class="navbar-title">Rahul Dubey</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -91,16 +92,16 @@ ul.task-list li input[type="checkbox"] {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+    <a class="nav-link" href="./about.html"> 
+<span class="menu-text">Rahul Dubey</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dubeyrahul/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dubeyrahul"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rvdubey/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -112,40 +113,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
 </header>
 <!-- content -->
-<header id="title-block-header" class="quarto-title-block default page-columns page-full">
-  <div class="quarto-title-banner page-columns page-full">
-    <div class="quarto-title column-body">
-      <h1 class="title">LLMs Part 1: Token Embeddings</h1>
-                                <div class="quarto-categories">
-                <div class="quarto-category">ml</div>
-                <div class="quarto-category">deep-learning</div>
-                <div class="quarto-category">llm</div>
-              </div>
-                  </div>
-  </div>
-    
-  
-  <div class="quarto-title-meta">
-
-      <div>
-      <div class="quarto-title-meta-heading">Author</div>
-      <div class="quarto-title-meta-contents">
-               <p>Rahul Dubey </p>
-            </div>
-    </div>
-      
-      <div>
-      <div class="quarto-title-meta-heading">Published</div>
-      <div class="quarto-title-meta-contents">
-        <p class="date">December 25, 2024</p>
-      </div>
-    </div>
-    
-      
-    </div>
-    
-  
-  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
@@ -153,74 +121,111 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#tokenization" id="toc-tokenization" class="nav-link active" data-scroll-target="#tokenization">Tokenization</a></li>
-  <li><a href="#mapping-to-token-ids" id="toc-mapping-to-token-ids" class="nav-link" data-scroll-target="#mapping-to-token-ids">Mapping to Token IDs</a></li>
-  <li><a href="#special-context-tokens" id="toc-special-context-tokens" class="nav-link" data-scroll-target="#special-context-tokens">Special context tokens</a></li>
-  <li><a href="#byte-pair-encoding" id="toc-byte-pair-encoding" class="nav-link" data-scroll-target="#byte-pair-encoding">Byte pair encoding</a></li>
-  <li><a href="#generate-token-dataset-for-gpt-style-model" id="toc-generate-token-dataset-for-gpt-style-model" class="nav-link" data-scroll-target="#generate-token-dataset-for-gpt-style-model">Generate token dataset for GPT-style model</a></li>
-  <li><a href="#generate-token-embeddings" id="toc-generate-token-embeddings" class="nav-link" data-scroll-target="#generate-token-embeddings">Generate Token Embeddings</a></li>
-  <li><a href="#generate-position-embeddings" id="toc-generate-position-embeddings" class="nav-link" data-scroll-target="#generate-position-embeddings">Generate Position Embeddings</a></li>
-  <li><a href="#summary" id="toc-summary" class="nav-link" data-scroll-target="#summary">Summary</a></li>
+  <li><a href="#claude.md-working-context-for-this-repo" id="toc-claude.md-working-context-for-this-repo" class="nav-link active" data-scroll-target="#claude.md-working-context-for-this-repo">CLAUDE.md — working context for this repo</a>
+  <ul>
+  <li><a href="#what-this-repo-is" id="toc-what-this-repo-is" class="nav-link" data-scroll-target="#what-this-repo-is">What this repo is</a></li>
+  <li><a href="#local-workflow" id="toc-local-workflow" class="nav-link" data-scroll-target="#local-workflow">Local workflow</a></li>
+  <li><a href="#the-north-star" id="toc-the-north-star" class="nav-link" data-scroll-target="#the-north-star">The North Star</a></li>
+  <li><a href="#author-preferences-important" id="toc-author-preferences-important" class="nav-link" data-scroll-target="#author-preferences-important">Author preferences (important)</a></li>
+  <li><a href="#roadmap-agreed-phases" id="toc-roadmap-agreed-phases" class="nav-link" data-scroll-target="#roadmap-agreed-phases">Roadmap (agreed phases)</a></li>
+  <li><a href="#site-improvements-backlog" id="toc-site-improvements-backlog" class="nav-link" data-scroll-target="#site-improvements-backlog">Site-improvements backlog</a></li>
+  <li><a href="#decisions-locked-in" id="toc-decisions-locked-in" class="nav-link" data-scroll-target="#decisions-locked-in">Decisions locked in</a></li>
+  <li><a href="#confirmed-resolved" id="toc-confirmed-resolved" class="nav-link" data-scroll-target="#confirmed-resolved">Confirmed / resolved</a></li>
+  <li><a href="#open-items" id="toc-open-items" class="nav-link" data-scroll-target="#open-items">Open items</a></li>
+  </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content quarto-banner-title-block" id="quarto-document-content">
+<main class="content" id="quarto-document-content"><header id="title-block-header" class="quarto-title-block"></header>
 
 
 
 
-
-<p>In this post, I am diving into token embeddings. LLMs like any other ML model cannot process raw-text directly. The process with which we convert raw-text into acceptable format (i.e.&nbsp;vector of numbers) is loosely called tokenization. Once tokenized, LLMs learn contextual embeddings for these tokens. We learn embeddings as part of LLM pre-training because doing so makes embeddings optimized for the specific data and learning task. The same concept applies to other data formats: audio, video, etc.</p>
-<p>We perform this conversion in following steps: 1. Tokenization 2. Mapping to Token IDs 3. Adding special context tokens 4. Byte-pair encoding 5. Generate token dataset for GPT-style model 6. Token Embedding 7. Position Embedding</p>
-<section id="tokenization" class="level3">
-<h3 class="anchored" data-anchor-id="tokenization">Tokenization</h3>
-<p>A simple way to do this is to use some kind of regex expression to split your text into individual words. A lot of design decisions come into play here, for example: - do we keep text case sensitive? - Might be good if your LLM is supposed to generate case sensitive text - do we keep and encode whitespace characters? - Might be good if your LLM is used for applications where whitespace generation is important: Python code generation - do we want to keep punctuation? - Might be good if your LLM is used for expressive text generation but maybe not if you are doing simpler tasks like text classification</p>
-<p>If we use both cases, whitespaces, punctuation, etc. we increase computational complexity but get more expressability in our tokens. In most modern NLP approaches (with LLMs), we keep all characters (rather we algorithmically decide using sub-words: more details later in this post)</p>
-<p>After we tokenize the data, we typically end up with more words than if we had just split by whitespaces. Ok, so now instead of a single string we have a list of strings, but this is not acceptable to LLMs either, so we now generate an identifier for each token.</p>
-</section>
-<section id="mapping-to-token-ids" class="level3">
-<h3 class="anchored" data-anchor-id="mapping-to-token-ids">Mapping to Token IDs</h3>
-<p>Essentially, we find all the unique tokens and assign them an integer ID to generate a <code>map</code> from token (str) -&gt; tokenID (int). We also want to keep a <code>reverse-map</code> of this so that we can map IDs back into tokens. The size of this mapping defines the “vocabulary size”. Vocabulary size is the number of unique tokens that your LLM can generate. Tokenizer is now capable of 1) encoding: converting a string to a list of tokenIDs using a vocabulary and 2) decoding: converting a list of tokenIDs into list of tokens and subsequently a string. Since, we are working with <code>map</code>, one obvious question is what happens if we a Key does not exist in the map. What this means in our tokenization context is what if we get a string that our Tokenizer has not seen before? It won’t be able to convert it to TokenID, and hence it will fail to tokenize any text with words/strings it has not seen before. Similar to how we handle unknown keys in <code>map</code>, we can come up with some <code>default</code> value for unknown keys.</p>
-</section>
-<section id="special-context-tokens" class="level3">
-<h3 class="anchored" data-anchor-id="special-context-tokens">Special context tokens</h3>
-<p>Special context tokens are essentially a catch-all to cover our corner cases (like mentioned above) and to provide LLM further assistance in text generation and understanding. For example, we can add an <code>&lt;unk&gt;</code> token to our vocabulary which acts as as a default value when our tokenizer seens an unknown token. Another common token is <code>&lt;eos&gt;</code> to denote end of sequence (or rather to indicate to LLM that it can stop generating text) It is useful when giving LLMs multiple sentences/documents that are unrelated. Some other common special context tokens are: <code>&lt;bos&gt;</code>: beginning of a new sequence and <code>&lt;pad&gt;</code> to denote that these are just padding to fit the batch size during training.</p>
-<p>We basically add these special tokens to our vocabulary <code>map</code> and <code>reverse-map</code> and now our tokenizer is ready to tokenize any string! The downside of our existing tokenizer is the following: - It is terrible at unseen words. For example, if “come” is in our vocabulary but “coming” is not, there’s no way for our tokenizer to encode “coming” even though it is very closely related to a known token “come”. So all unseen words become <code>&lt;unk&gt;</code>, even if we have closely related words in the vocabulary - Our tokenizer relies on splitting over whitespace which works fine for English but not for all languages</p>
-</section>
-<section id="byte-pair-encoding" class="level3">
-<h3 class="anchored" data-anchor-id="byte-pair-encoding">Byte pair encoding</h3>
-<p>Byte pair encoding, commonly called BPE is a subword-based tokenization scheme. On a high level, this is what it does: 1. Split words into individual characters (unigrams) 2. Merge commonly occurring pair of adjacent characters into new tokens 3. Repeat 2 until some stop condition like size of vocabulary or frequency cut-off So, instead of word-based tokenization which is what we discussed earlier, we get “sub-word” based tokenization. Conceptually: <code>character &lt; sub-word &lt; word</code>. The subword based tokenization does not split frequently occurring words but instead splits rarely occurring words. So “toy” may remain as a token but “toys” is split into “toy” and “s”. So, now when our tokenizer seens an unknown word while encoding, it splits into into tokens it has seen before. For e.g.&nbsp;if we are trying to tokenize a word: “absobloodylutely”, it might break it up into <abso>, <bloody>, <lutely> subword tokens (assuming these 3 are present in the vocabularly generated by BPE tokenizer).</lutely></bloody></abso></p>
-<p>TODO: I’ll dive into BPE and sub-word tokenization is discussed in a separate blog post.</p>
-</section>
-<section id="generate-token-dataset-for-gpt-style-model" class="level3">
-<h3 class="anchored" data-anchor-id="generate-token-dataset-for-gpt-style-model">Generate token dataset for GPT-style model</h3>
-<p>Before we go about creating embeddings for token, we need a way to create a “task” that will serve to create these embeddings. How GPT-style decoders typically go about doing so is some sort of variation of next-token prediction. So, we have a sentence: “I am a writer” in our text corpus. We can create training samples with &lt;data, label&gt; pair like below: - <code>[I]</code>, <code>am</code> - <code>[I, am]</code>, <code>a</code> - <code>[I, am, a]</code>, <code>writer</code> So essentially, we have to employ a sliding window approach through our corpus and create these pairs. One common design choice is what is the maximum length of my feature-vector. This is called the context-length. Higher context-length means more memory/compute needed during training as well as inference. However, the LLM can process and reason through a much longer piece of text, i.e.&nbsp;it can understand more context. Shorter context length could work if you are creating very targeted use-case like sentiment analysis of product reviews where reviews are short and the label generated is also just a sentiment label. Most GPT-style/decoder-style LLM models come with massive context length so that they are are as powerful as possible. To do this in practice, we can create a Dataset and DataLoader class in PyTorch. Dataset would convert our text into tokens using a tokenizer and create input_ids and target_ids by shifting the sliding window till it reaches a size of <code>context_length</code>. So, now our dataset looks like a row of tensors where our input_ids look like: <code>[30,23,1000,12]</code> and target_ids look like: <code>[23,1000,12,6]</code> (see how we set stride of 1 here).</p>
-</section>
-<section id="generate-token-embeddings" class="level3">
-<h3 class="anchored" data-anchor-id="generate-token-embeddings">Generate Token Embeddings</h3>
-<p>To go from a list of tokenIDs to a list of token embeddings, we have to create an Embedding matrix of shape [vocab_size, embedding_size] where embedding_size is a design choice. Larger embedding_size means more compute/memory required but we also get a more powerful model. If we look at the shape of the Embedding matrix, we can say that each token is represented by a vector of size <code>embedding_size</code> and this Embedding matrix is basically a look-up table to go from token-id to a token-embedding. But instead of doing a naive one-hot encoding lookup, we do a lookup over a continuous space of <code>embedding_size</code>. This matrix is initialized randomly and is learned during the process of LLM pre-training.</p>
-<p>We should be done now, right? We started with a piece of text, cleaned it, tokenized it into subword based tokens, and now we have a vector representation that can be fed into a neural network. But, there’s a crucial piece missing. Modern transformer based LLMs are based on attention-mechanism. This attention mechanism works on tokens independently as in it does not have a notion of position of tokens in a piece of text. So, if a token 22 appears in text, it will always be mapped to the same embedding irrespective of where it appeared in the sequence.</p>
-<p>To get around this shortcoming, <code>position embeddings</code> were introduced.</p>
-</section>
-<section id="generate-position-embeddings" class="level3">
-<h3 class="anchored" data-anchor-id="generate-position-embeddings">Generate Position Embeddings</h3>
-<p>There are 2 categories of position embeddings: absolute and relative. Absolute position embeddings are defined by exact position of the token. So, any token at first position always gets the same position embedding irrespective of how long is the sequence. Relative position embeddings depend on a token’s position w.r.t other tokens in the sequence, i.e.&nbsp;distance between tokens in a sequence. So the model learns how far apart are certain tokens rather than where exactly a token is situated. So relative works pretty well with varying size sequences and sequence lengths that are unseen in training. For absolute position embedding, the shape of this matrix would be <code>[context_length, embedding_size]</code>. Note that the input to position embedding layer is essentially a placeholder vector containing each position from 0 to <code>context_length</code>. Position embeddings can also be learned during training process, this is how it works in GPT models. T5 model uses relative position embedding whereas GPT/LLama use a Rotation based absolute position embedding.</p>
-<p>Finally, to create the input embeddings we add token embeddings and position embeddings!</p>
-<pre><code>text -&gt; token IDs -&gt; token_embedding
-[0,...,context_length] -&gt; position_embedding
-input_embedding = token_embedding + position_embedding</code></pre>
-</section>
-<section id="summary" class="level3">
-<h3 class="anchored" data-anchor-id="summary">Summary</h3>
+<section id="claude.md-working-context-for-this-repo" class="level1">
+<h1>CLAUDE.md — working context for this repo</h1>
+<blockquote class="blockquote">
+<p>Local-only notes (gitignored). Purpose: let any future Claude/Claude Code session pick up where we left off. Not published, not pushed.</p>
+</blockquote>
+<section id="what-this-repo-is" class="level2">
+<h2 class="anchored" data-anchor-id="what-this-repo-is">What this repo is</h2>
+<p>Personal blog + portfolio for Rahul Dubey, built with <strong>Quarto</strong>, deployed to <strong>GitHub Pages</strong>.</p>
 <ul>
-<li>LLMs like any other NNs need numbers to work with, so we need to convert text to numbers</li>
-<li>We can split the text into subword based tokens</li>
-<li>Next, we learn a continuous representation for these tokens and call it token embedding</li>
-<li>Since attention based LLMs are position agnostic, we add a position embedding to token embedding to obtain the input embedding of a token</li>
+<li>Source of truth: <code>main</code> branch (<code>.qmd</code>, <code>_quarto.yml</code>, <code>styles.scss</code>, <code>posts/</code>).</li>
+<li>Build output: <code>docs/</code> (gitignored, local preview only).</li>
+<li>Live site is served from the <strong><code>gh-pages</code></strong> branch, published via <code>quarto publish gh-pages</code> (builds and pushes to gh-pages). No GitHub Action.</li>
+<li>URL: https://dubeyrahul.github.io/ (custom domain <code>dubeyrahul.com</code> planned, not bought yet)</li>
+</ul>
+</section>
+<section id="local-workflow" class="level2">
+<h2 class="anchored" data-anchor-id="local-workflow">Local workflow</h2>
+<ul>
+<li>Preview: <code>quarto preview</code> (live-reload at http://localhost:xxxx)</li>
+<li>Render only: <code>quarto render</code></li>
+<li>Deploy: <code>quarto publish gh-pages</code></li>
+</ul>
+</section>
+<section id="the-north-star" class="level2">
+<h2 class="anchored" data-anchor-id="the-north-star">The North Star</h2>
+<p>Rahul is a Senior ML Engineer (Patreon; prior Amazon, Lyft, Yelp) focused on ranking / search / recommendations. <strong>Long-term goal:</strong> build the blog/portfolio into something that credibly positions him as an <strong>AI/ML consultant</strong> for eventual freelance work. Strategy = show experience + knowledge, build a consistent body of work.</p>
+</section>
+<section id="author-preferences-important" class="level2">
+<h2 class="anchored" data-anchor-id="author-preferences-important">Author preferences (important)</h2>
+<ul>
+<li><strong>Edits to his posts: typo/spelling fixes only. Do NOT change his writing voice.</strong></li>
+<li>Prefers concise, direct communication. Ground claims in real impact, no overclaiming.</li>
+<li>No internal/proprietary metrics on the public site. Company names are fine. <code>UUUPAR</code> is a public-safe project name.</li>
+</ul>
+</section>
+<section id="roadmap-agreed-phases" class="level2">
+<h2 class="anchored" data-anchor-id="roadmap-agreed-phases">Roadmap (agreed phases)</h2>
+<ol type="1">
+<li>Fix identity — real About/bio, correct profile links. <em>(done)</em></li>
+<li>Build a sustainable publishing cadence (1 post / 4–6 wks). Finish LLM series.</li>
+<li>Add a lightweight portfolio/projects layer (later).</li>
+<li>Consulting “work with me” surface (much later, only after a real body of work).</li>
+</ol>
+</section>
+<section id="site-improvements-backlog" class="level2">
+<h2 class="anchored" data-anchor-id="site-improvements-backlog">Site-improvements backlog</h2>
+<ul class="task-list">
+<li><label><input type="checkbox" checked="">Rewrite About into a real bio / positioning</label></li>
+<li><label><input type="checkbox" checked="">Fix GitHub/LinkedIn links (were stale on live; source now correct)</label></li>
+<li><label><input type="checkbox" checked="">Theme swap + custom <code>styles.scss</code> (Inter/Newsreader, wider column, hero, listing)</label></li>
+<li><label><input type="checkbox" checked="">Landing page: hero (photo, positioning, CTAs) + post listing below</label></li>
+<li><label><input type="checkbox" checked="">Typo pass across posts (typos only)</label></li>
+<li><label><input type="checkbox">Analytics — <strong>next up</strong>. Decision pending: GoatCounter vs Cloudflare Web Analytics (both free, no cookie banner). NOT GA4 (cookie banner + noise), NOT paid (Plausible ruled out).</label></li>
+<li><label><input type="checkbox">Custom domain <code>dubeyrahul.com</code> → point CNAME at GitHub Pages (when purchased). No hosting migration needed.</label></li>
+<li><label><input type="checkbox">Email capture / newsletter signup (later-stage; own-and-syndicate model)</label></li>
+<li><label><input type="checkbox">Content strategy / posting cadence brainstorm (Rahul wants to do this after analytics)</label></li>
+</ul>
+</section>
+<section id="decisions-locked-in" class="level2">
+<h2 class="anchored" data-anchor-id="decisions-locked-in">Decisions locked in</h2>
+<ul>
+<li>Stay on Quarto + GitHub Pages. Do NOT migrate to Hugo/Astro/Next or to Vercel/Cloudflare hosting.</li>
+<li>Own the platform (site is home base); don’t move writing to Substack/Patreon. Syndicate later.</li>
+</ul>
+</section>
+<section id="confirmed-resolved" class="level2">
+<h2 class="anchored" data-anchor-id="confirmed-resolved">Confirmed / resolved</h2>
+<ul>
+<li><strong>LinkedIn handle</strong>: <code>linkedin.com/in/rvdubey</code> is correct (Rahul verified). Used site-wide.</li>
+<li><strong><code>posts/llms/making-a-transformer.md</code> (LLMs Part 3)</strong> is INCOMPLETE (empty “Putting it all together”). Set to <code>draft: true</code> so it won’t publish. Un-draft when finished.</li>
+<li>Fixed broken Jekyll cross-links between the two Python posts — now relative Quarto links (<code>../effective-python-1/...md</code> / <code>../effective-python-2/...md</code>).</li>
+<li>Fixed <code>feature-stores.md</code>: <code>tecton.ai</code> / <code>hopsworks.ai</code> links now have <code>https://</code>.</li>
+<li>Fully off Jekyll: Quarto + <code>.nojekyll</code> on published output. No Liquid processing.</li>
+</ul>
+</section>
+<section id="open-items" class="level2">
+<h2 class="anchored" data-anchor-id="open-items">Open items</h2>
+<ul>
+<li>A few Python code snippets have small bugs (e.g.&nbsp;<code>.add()</code> vs <code>.append()</code>, missing parens). NOT fixed — code-correctness, needs Rahul’s review (may be intentional teaching examples).</li>
+<li>NOTE: <code>styles.scss</code> is a new untracked file — remember <code>git add styles.scss</code> before committing.</li>
 </ul>
 
 
+</section>
 </section>
 
 </main> <!-- /main -->
@@ -314,7 +319,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp("https:\/\/dubeyrahul\.github\.io\/");
+      var filterRegex = new RegExp('/' + window.location.host + '/');
     var isInternal = (href) => {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }

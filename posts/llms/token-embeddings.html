@@ -9,7 +9,7 @@
 <meta name="author" content="Rahul Dubey">
 <meta name="dcterms.date" content="2024-12-25">
 
-<title>LLMs Part 1: Token Embeddings – Rahul Dubey’s Blog</title>
+<title>LLMs Part 1: Token Embeddings – Rahul Dubey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-08f416a8df102e87d63c61fa93a2f252.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-4968d28af72d4e5a34172c9bc5ef961b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f4efd7ce54f3e21d21eca2fc96c3beb8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +70,12 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="LLMs Part 1: Token Embeddings – Rahul Dubey">
+<meta property="og:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta property="og:site_name" content="Rahul Dubey">
+<meta name="twitter:title" content="LLMs Part 1: Token Embeddings – Rahul Dubey">
+<meta name="twitter:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -81,7 +86,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Rahul Dubey’s Blog</span>
+    <span class="navbar-title">Rahul Dubey</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -92,15 +97,15 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Rahul Dubey</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dubeyrahul/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dubeyrahul"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rvdubey/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -181,21 +186,21 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="mapping-to-token-ids" class="level3">
 <h3 class="anchored" data-anchor-id="mapping-to-token-ids">Mapping to Token IDs</h3>
-<p>Essentially, we find all the unique tokens and assign them an integer ID to generate a <code>map</code> from token (str) -&gt; tokenID (int). We also want to keep a <code>reverse-map</code> of this so that we can map IDs back into tokens. The size of this mapping defines the “vocabulary size”. Vocabulary size is the number of unique tokens that your LLM can generate. Tokenizer is now capable of 1) encoding: converting a string to a list of tokenIDs using a vocabulary and 2) decoding: converting a list of tokenIDs into list of tokens and subsequently a string. Since, we are working with <code>map</code>, one obvious question is what happens if we a Key does not exist in the map. What this means in our tokenization context is what if we get a string that our Tokenizer has not seen before? It won’t be able to convert it to TokenID, and hence it will fail to tokenize any text with words/strings it has not seen before. Similar to how we handle unknown keys in <code>map</code>, we can come up with some <code>default</code> value for unknown keys.</p>
+<p>Essentially, we find all the unique tokens and assign them an integer ID to generate a <code>map</code> from token (str) -&gt; tokenID (int). We also want to keep a <code>reverse-map</code> of this so that we can map IDs back into tokens. The size of this mapping defines the “vocabulary size”. Vocabulary size is the number of unique tokens that your LLM can generate. Tokenizer is now capable of 1) encoding: converting a string to a list of tokenIDs using a vocabulary and 2) decoding: converting a list of tokenIDs into list of tokens and subsequently a string. Since, we are working with <code>map</code>, one obvious question is what happens if a Key does not exist in the map. What this means in our tokenization context is what if we get a string that our Tokenizer has not seen before? It won’t be able to convert it to TokenID, and hence it will fail to tokenize any text with words/strings it has not seen before. Similar to how we handle unknown keys in <code>map</code>, we can come up with some <code>default</code> value for unknown keys.</p>
 </section>
 <section id="special-context-tokens" class="level3">
 <h3 class="anchored" data-anchor-id="special-context-tokens">Special context tokens</h3>
-<p>Special context tokens are essentially a catch-all to cover our corner cases (like mentioned above) and to provide LLM further assistance in text generation and understanding. For example, we can add an <code>&lt;unk&gt;</code> token to our vocabulary which acts as as a default value when our tokenizer seens an unknown token. Another common token is <code>&lt;eos&gt;</code> to denote end of sequence (or rather to indicate to LLM that it can stop generating text) It is useful when giving LLMs multiple sentences/documents that are unrelated. Some other common special context tokens are: <code>&lt;bos&gt;</code>: beginning of a new sequence and <code>&lt;pad&gt;</code> to denote that these are just padding to fit the batch size during training.</p>
+<p>Special context tokens are essentially a catch-all to cover our corner cases (like mentioned above) and to provide LLM further assistance in text generation and understanding. For example, we can add an <code>&lt;unk&gt;</code> token to our vocabulary which acts as a default value when our tokenizer sees an unknown token. Another common token is <code>&lt;eos&gt;</code> to denote end of sequence (or rather to indicate to LLM that it can stop generating text) It is useful when giving LLMs multiple sentences/documents that are unrelated. Some other common special context tokens are: <code>&lt;bos&gt;</code>: beginning of a new sequence and <code>&lt;pad&gt;</code> to denote that these are just padding to fit the batch size during training.</p>
 <p>We basically add these special tokens to our vocabulary <code>map</code> and <code>reverse-map</code> and now our tokenizer is ready to tokenize any string! The downside of our existing tokenizer is the following: - It is terrible at unseen words. For example, if “come” is in our vocabulary but “coming” is not, there’s no way for our tokenizer to encode “coming” even though it is very closely related to a known token “come”. So all unseen words become <code>&lt;unk&gt;</code>, even if we have closely related words in the vocabulary - Our tokenizer relies on splitting over whitespace which works fine for English but not for all languages</p>
 </section>
 <section id="byte-pair-encoding" class="level3">
 <h3 class="anchored" data-anchor-id="byte-pair-encoding">Byte pair encoding</h3>
-<p>Byte pair encoding, commonly called BPE is a subword-based tokenization scheme. On a high level, this is what it does: 1. Split words into individual characters (unigrams) 2. Merge commonly occurring pair of adjacent characters into new tokens 3. Repeat 2 until some stop condition like size of vocabulary or frequency cut-off So, instead of word-based tokenization which is what we discussed earlier, we get “sub-word” based tokenization. Conceptually: <code>character &lt; sub-word &lt; word</code>. The subword based tokenization does not split frequently occurring words but instead splits rarely occurring words. So “toy” may remain as a token but “toys” is split into “toy” and “s”. So, now when our tokenizer seens an unknown word while encoding, it splits into into tokens it has seen before. For e.g.&nbsp;if we are trying to tokenize a word: “absobloodylutely”, it might break it up into <abso>, <bloody>, <lutely> subword tokens (assuming these 3 are present in the vocabularly generated by BPE tokenizer).</lutely></bloody></abso></p>
-<p>TODO: I’ll dive into BPE and sub-word tokenization is discussed in a separate blog post.</p>
+<p>Byte pair encoding, commonly called BPE is a subword-based tokenization scheme. On a high level, this is what it does: 1. Split words into individual characters (unigrams) 2. Merge commonly occurring pair of adjacent characters into new tokens 3. Repeat 2 until some stop condition like size of vocabulary or frequency cut-off So, instead of word-based tokenization which is what we discussed earlier, we get “sub-word” based tokenization. Conceptually: <code>character &lt; sub-word &lt; word</code>. The subword based tokenization does not split frequently occurring words but instead splits rarely occurring words. So “toy” may remain as a token but “toys” is split into “toy” and “s”. So, now when our tokenizer sees an unknown word while encoding, it splits it into tokens it has seen before. For e.g.&nbsp;if we are trying to tokenize a word: “absobloodylutely”, it might break it up into <abso>, <bloody>, <lutely> subword tokens (assuming these 3 are present in the vocabularly generated by BPE tokenizer).</lutely></bloody></abso></p>
+<p>I’ll dive deeper into BPE and sub-word tokenization in a separate blog post.</p>
 </section>
 <section id="generate-token-dataset-for-gpt-style-model" class="level3">
 <h3 class="anchored" data-anchor-id="generate-token-dataset-for-gpt-style-model">Generate token dataset for GPT-style model</h3>
-<p>Before we go about creating embeddings for token, we need a way to create a “task” that will serve to create these embeddings. How GPT-style decoders typically go about doing so is some sort of variation of next-token prediction. So, we have a sentence: “I am a writer” in our text corpus. We can create training samples with &lt;data, label&gt; pair like below: - <code>[I]</code>, <code>am</code> - <code>[I, am]</code>, <code>a</code> - <code>[I, am, a]</code>, <code>writer</code> So essentially, we have to employ a sliding window approach through our corpus and create these pairs. One common design choice is what is the maximum length of my feature-vector. This is called the context-length. Higher context-length means more memory/compute needed during training as well as inference. However, the LLM can process and reason through a much longer piece of text, i.e.&nbsp;it can understand more context. Shorter context length could work if you are creating very targeted use-case like sentiment analysis of product reviews where reviews are short and the label generated is also just a sentiment label. Most GPT-style/decoder-style LLM models come with massive context length so that they are are as powerful as possible. To do this in practice, we can create a Dataset and DataLoader class in PyTorch. Dataset would convert our text into tokens using a tokenizer and create input_ids and target_ids by shifting the sliding window till it reaches a size of <code>context_length</code>. So, now our dataset looks like a row of tensors where our input_ids look like: <code>[30,23,1000,12]</code> and target_ids look like: <code>[23,1000,12,6]</code> (see how we set stride of 1 here).</p>
+<p>Before we go about creating embeddings for token, we need a way to create a “task” that will serve to create these embeddings. How GPT-style decoders typically go about doing so is some sort of variation of next-token prediction. So, we have a sentence: “I am a writer” in our text corpus. We can create training samples with &lt;data, label&gt; pair like below: - <code>[I]</code>, <code>am</code> - <code>[I, am]</code>, <code>a</code> - <code>[I, am, a]</code>, <code>writer</code> So essentially, we have to employ a sliding window approach through our corpus and create these pairs. One common design choice is what is the maximum length of my feature-vector. This is called the context-length. Higher context-length means more memory/compute needed during training as well as inference. However, the LLM can process and reason through a much longer piece of text, i.e.&nbsp;it can understand more context. Shorter context length could work if you are creating very targeted use-case like sentiment analysis of product reviews where reviews are short and the label generated is also just a sentiment label. Most GPT-style/decoder-style LLM models come with massive context length so that they are as powerful as possible. To do this in practice, we can create a Dataset and DataLoader class in PyTorch. Dataset would convert our text into tokens using a tokenizer and create input_ids and target_ids by shifting the sliding window till it reaches a size of <code>context_length</code>. So, now our dataset looks like a row of tensors where our input_ids look like: <code>[30,23,1000,12]</code> and target_ids look like: <code>[23,1000,12,6]</code> (see how we set stride of 1 here).</p>
 </section>
 <section id="generate-token-embeddings" class="level3">
 <h3 class="anchored" data-anchor-id="generate-token-embeddings">Generate Token Embeddings</h3>
@@ -205,7 +210,7 @@ ul.task-list li input[type="checkbox"] {
 </section>
 <section id="generate-position-embeddings" class="level3">
 <h3 class="anchored" data-anchor-id="generate-position-embeddings">Generate Position Embeddings</h3>
-<p>There are 2 categories of position embeddings: absolute and relative. Absolute position embeddings are defined by exact position of the token. So, any token at first position always gets the same position embedding irrespective of how long is the sequence. Relative position embeddings depend on a token’s position w.r.t other tokens in the sequence, i.e.&nbsp;distance between tokens in a sequence. So the model learns how far apart are certain tokens rather than where exactly a token is situated. So relative works pretty well with varying size sequences and sequence lengths that are unseen in training. For absolute position embedding, the shape of this matrix would be <code>[context_length, embedding_size]</code>. Note that the input to position embedding layer is essentially a placeholder vector containing each position from 0 to <code>context_length</code>. Position embeddings can also be learned during training process, this is how it works in GPT models. T5 model uses relative position embedding whereas GPT/LLama use a Rotation based absolute position embedding.</p>
+<p>There are 2 categories of position embeddings: absolute and relative. Absolute position embeddings are defined by exact position of the token. So, any token at first position always gets the same position embedding irrespective of how long is the sequence. Relative position embeddings depend on a token’s position w.r.t other tokens in the sequence, i.e.&nbsp;distance between tokens in a sequence. So the model learns how far apart are certain tokens rather than where exactly a token is situated. So relative works pretty well with varying size sequences and sequence lengths that are unseen in training. For absolute position embedding, the shape of this matrix would be <code>[context_length, embedding_size]</code>. Note that the input to position embedding layer is essentially a placeholder vector containing each position from 0 to <code>context_length</code>. Position embeddings can also be learned during training process, this is how it works in GPT models. T5 model uses relative position embedding whereas GPT/Llama use a Rotation based absolute position embedding.</p>
 <p>Finally, to create the input embeddings we add token embeddings and position embeddings!</p>
 <pre><code>text -&gt; token IDs -&gt; token_embedding
 [0,...,context_length] -&gt; position_embedding
@@ -224,6 +229,18 @@ input_embedding = token_embedding + position_embedding</code></pre>
 </section>
 
 </main> <!-- /main -->
+<div class="author-card">
+  <img src="../../profile.jpg" alt="Rahul Dubey" class="author-card-img">
+  <div class="author-card-body">
+    <div class="author-card-name">Rahul Dubey</div>
+    <p class="author-card-bio">Senior ML Engineer at Patreon, working on ranking, search, and recommendation systems. I write from-scratch explainers on ML systems, LLMs, and writing better Python.</p>
+    <div class="author-card-links">
+      <a href="../../about.html">About</a>
+      <a href="https://github.com/dubeyrahul/">GitHub</a>
+      <a href="https://www.linkedin.com/in/rvdubey/">LinkedIn</a>
+    </div>
+  </div>
+</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

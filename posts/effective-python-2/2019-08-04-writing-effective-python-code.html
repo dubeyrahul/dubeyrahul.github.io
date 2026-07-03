@@ -9,7 +9,7 @@
 <meta name="author" content="Rahul Dubey">
 <meta name="dcterms.date" content="2019-08-04">
 
-<title>Writing Pythonic code: Part 2 – Rahul Dubey’s Blog</title>
+<title>Writing Pythonic code: Part 2 – Rahul Dubey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -71,10 +71,10 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-08f416a8df102e87d63c61fa93a2f252.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-4968d28af72d4e5a34172c9bc5ef961b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f4efd7ce54f3e21d21eca2fc96c3beb8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -104,7 +104,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Writing Pythonic code: Part 2 – Rahul Dubey">
+<meta property="og:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta property="og:site_name" content="Rahul Dubey">
+<meta name="twitter:title" content="Writing Pythonic code: Part 2 – Rahul Dubey">
+<meta name="twitter:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta name="twitter:card" content="summary">
 </head>
 
 <body class="nav-fixed">
@@ -115,7 +120,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Rahul Dubey’s Blog</span>
+    <span class="navbar-title">Rahul Dubey</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -126,15 +131,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Rahul Dubey</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dubeyrahul/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dubeyrahul"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rvdubey/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -204,7 +209,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 
 
-<p>This is the second post (<a href="%7B%%20post_url%202019-08-03-writing-pythonic-code%20%%7D">here’s the first</a>) on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.</p>
+<p>This is the second post (<a href="../../posts/effective-python-1/2019-08-03-writing-pythonic-code.html">here’s the first</a>) on writing Pythonic code. In this post, we will first go over some aspects of writing effective Python code by brushing over topics such as: slicing, list comprehension, generator expressions.</p>
 <section id="writing-effective-python-code" class="level3">
 <h3 class="anchored" data-anchor-id="writing-effective-python-code">Writing effective Python code</h3>
 <section id="slicing" class="level4">
@@ -261,7 +266,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1: Using for loop</span></span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>even_squares <span class="op">=</span> []</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> a:</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    even_squares.add(elem<span class="op">*</span>elem)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>    even_squares.append(elem<span class="op">*</span>elem)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 2: Using map()</span></span>
 <span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>even_squares <span class="op">=</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: x<span class="op">*</span>x, a)</span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
@@ -272,9 +277,9 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>even_squares <span class="op">=</span> []</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> elem <span class="kw">in</span> a:</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> elem <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>:</span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        even_squares.add(elem<span class="op">*</span>elem)         </span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        even_squares.append(elem<span class="op">*</span>elem)          </span>
 <span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 2: Using map()</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>even_squares <span class="op">=</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: x<span class="op">*</span>x, <span class="bu">filter</span>(<span class="kw">lambda</span> x: x <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>, a)</span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>even_squares <span class="op">=</span> <span class="bu">map</span>(<span class="kw">lambda</span> x: x<span class="op">*</span>x, <span class="bu">filter</span>(<span class="kw">lambda</span> x: x <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>, a))</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 3: Using list comprehension</span></span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>even_squares <span class="op">=</span> [x<span class="op">*</span>x <span class="cf">for</span> x <span class="kw">in</span> a <span class="cf">if</span> x <span class="op">%</span> <span class="dv">2</span> <span class="op">==</span> <span class="dv">0</span>]</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In my opinion, list comprehensions become much easier to read once <code>filter</code> gets involved with <code>map</code>.</p>
@@ -289,13 +294,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div class="sourceCode" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 1: Using list comprehension:</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>flat <span class="op">=</span> [x <span class="cf">for</span> level_1 <span class="kw">in</span> matrix</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> level_2 <span class="kw">in</span> level_1</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> x <span class="kw">in</span> level_3]</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>         <span class="cf">for</span> x <span class="kw">in</span> level_2]</span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Method 2: Using for loops:</span></span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>flat <span class="op">=</span> []</span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> level_1 <span class="kw">in</span> matrix:</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> level_2 <span class="kw">in</span> matrix:</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        flat.extend(level_2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> level_2 <span class="kw">in</span> level_1:</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>        flat.extend(level_2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>It seems pretty clear that for-loop is more readable here and less confusing too.</p>
 <ul>
 <li>One major issue with list comprehension is that it is not scalable, in the sense it consumes a lot of memory in creating and holding the new list in memory. This is not ideal in dealing with big data, or large streams of infinite data, or while reading a big file. One common application in Machine Learning is reading large files, parsing it line by line, selecting some parts of the line as features and storing it in lists.</li>
@@ -305,7 +310,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="co"># let dataset.txt contain 1M rows. Then,</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'dataset.csv'</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>output_value <span class="op">=</span> [parse_and_extract_features(x) <span class="cf">for</span> x <span class="kw">in</span> <span class="bu">open</span>(file_name)]</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'output.csv'</span>, w)</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'output.csv'</span>, <span class="st">'w'</span>)</span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>output_file.write(output_value)</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># output_value will be a list of 1M items and we want to write it to a new file</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>In this case, a list of 1M items will be generated only to be written to the file and never used again. A better approach in this case is to use <strong>generator expressions</strong>.</p>
@@ -316,12 +321,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        <span class="cf">yield</span> parse_and_extract_features(row)</span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>file_name <span class="op">=</span> <span class="st">'dataset.csv'</span></span>
 <span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>output_generator <span class="op">=</span> genexp_extract_features(file_name)</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'output.csv'</span>, w)</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>output_file <span class="op">=</span> <span class="bu">open</span>(<span class="st">'output.csv'</span>, <span class="st">'w'</span>)</span>
 <span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> output_value <span class="kw">in</span> output_generator:</span>
 <span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>    output_file.write(output_value)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p>By using generator, we do not create a list of 1M items in memory and instead generate feature for one row at a time by creating output_generator object and then iterating over it. Note, we can iterate over genexp like this because essentially they are like iterators.</p>
 <ul>
-<li>In conclusion, generator expresssions are a more general form of list comprehension. They are also more efficient because they do not create the entire list in memory. Instead genexp (in short) evaluates to an iterator, that can be used to generate the result-list, one item at a time by calling next() on the evaluated iterator. In the above example, we could use genexp instead of list comprehension to evaluate and write one line at a time to the transformed_dataset file.</li>
+<li>In conclusion, generator expressions are a more general form of list comprehension. They are also more efficient because they do not create the entire list in memory. Instead genexp (in short) evaluates to an iterator, that can be used to generate the result-list, one item at a time by calling next() on the evaluated iterator. In the above example, we could use genexp instead of list comprehension to evaluate and write one line at a time to the transformed_dataset file.</li>
 <li>One thing to keep in mind is that genexp evaluates to iterators and once you call next() on it, that result is evaluated and returned and that value cannot be obtained again.</li>
 </ul>
 </section>
@@ -453,6 +458,18 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 
 </main> <!-- /main -->
+<div class="author-card">
+  <img src="../../profile.jpg" alt="Rahul Dubey" class="author-card-img">
+  <div class="author-card-body">
+    <div class="author-card-name">Rahul Dubey</div>
+    <p class="author-card-bio">Senior ML Engineer at Patreon, working on ranking, search, and recommendation systems. I write from-scratch explainers on ML systems, LLMs, and writing better Python.</p>
+    <div class="author-card-links">
+      <a href="../../about.html">About</a>
+      <a href="https://github.com/dubeyrahul/">GitHub</a>
+      <a href="https://www.linkedin.com/in/rvdubey/">LinkedIn</a>
+    </div>
+  </div>
+</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {

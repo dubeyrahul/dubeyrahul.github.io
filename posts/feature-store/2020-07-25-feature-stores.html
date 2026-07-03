@@ -9,7 +9,7 @@
 <meta name="author" content="Rahul Dubey">
 <meta name="dcterms.date" content="2020-07-25">
 
-<title>Feature Store: an essential part of ML infrastructure – Rahul Dubey’s Blog</title>
+<title>Feature Store: an essential part of ML infrastructure – Rahul Dubey</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -37,10 +37,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-08f416a8df102e87d63c61fa93a2f252.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../site_libs/bootstrap/bootstrap-4968d28af72d4e5a34172c9bc5ef961b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-f4efd7ce54f3e21d21eca2fc96c3beb8.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -70,7 +70,18 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
-<link rel="stylesheet" href="../../styles.css">
+<meta property="og:title" content="Feature Store: an essential part of ML infrastructure – Rahul Dubey">
+<meta property="og:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta property="og:image" content="https://dubeyrahul.github.io/posts/feature-store/ML_system.png">
+<meta property="og:site_name" content="Rahul Dubey">
+<meta property="og:image:height" content="608">
+<meta property="og:image:width" content="1350">
+<meta name="twitter:title" content="Feature Store: an essential part of ML infrastructure – Rahul Dubey">
+<meta name="twitter:description" content="Machine learning engineer writing about ML systems, LLMs, and Python.">
+<meta name="twitter:image" content="https://dubeyrahul.github.io/posts/feature-store/ML_system.png">
+<meta name="twitter:image-height" content="608">
+<meta name="twitter:image-width" content="1350">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
@@ -81,7 +92,7 @@ ul.task-list li input[type="checkbox"] {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a class="navbar-brand" href="../../index.html">
-    <span class="navbar-title">Rahul Dubey’s Blog</span>
+    <span class="navbar-title">Rahul Dubey</span>
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -92,15 +103,15 @@ ul.task-list li input[type="checkbox"] {
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
     <a class="nav-link" href="../../about.html"> 
-<span class="menu-text">About</span></a>
+<span class="menu-text">Rahul Dubey</span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/"> <i class="bi bi-github" role="img">
+    <a class="nav-link" href="https://github.com/dubeyrahul/"> <i class="bi bi-github" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
   <li class="nav-item compact">
-    <a class="nav-link" href="https://linkedin.com/in/dubeyrahul"> <i class="bi bi-linkedin" role="img">
+    <a class="nav-link" href="https://www.linkedin.com/in/rvdubey/"> <i class="bi bi-linkedin" role="img">
 </i> 
 <span class="menu-text"></span></a>
   </li>  
@@ -190,7 +201,7 @@ ul.task-list li input[type="checkbox"] {
 <p>Since ML is a relatively new software paradigm, a lot of the support around ML systems is either missing or is still developing. As mentioned by Andrej Karpathy in his <a href="https://www.youtube.com/watch?v=y57wwucbXR8">talk</a>, we need to build a new software stack for AI and ML, and managing data/features (in addition to code) is a big aspect of this new stack.</p>
 <p>In this post, I want to dive into a specific piece of infrastructure that deals with features: the data that helps you build your ML models and make your ML products successful. At least when it comes to structured data, a large part of ML use-cases is designing good features for your models. However, it doesn’t stop at that. If you are running a business on machine learning, then you want to know the following about your features: - is it available offline for Training and online for Serving - how does one read/load features offline and online - is there consistency between offline and online computations - how good is the quality of features - who is producing these features - who is consuming these features - are there SLAs around some/all of these features - how does one team discover features created by other</p>
 <p>There are many more such questions that need to be answered about the data goes into your ML models, and the models that power your business. Hence, there is a need for good tooling and infrastructure around features. <code>Feature Store</code> is a relatively new infrastructure solution to answer these questions. Though there are not a lot of mainstream solutions out there, big tech companies in ML space have built some custom infrastructure for this.</p>
-<p>Note: There are now companies like <a href="tecton.ai">Tecton</a> and <a href="hopsworks.ai">Hopsworks</a> who offer end-to-end enterprise grade solutions.</p>
+<p>Note: There are now companies like <a href="https://www.tecton.ai/">Tecton</a> and <a href="https://www.hopsworks.ai/">Hopsworks</a> who offer end-to-end enterprise grade solutions.</p>
 </section>
 <section id="feature-store" class="level3">
 <h3 class="anchored" data-anchor-id="feature-store">Feature Store</h3>
@@ -216,7 +227,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="time-travel" class="level4">
 <h4 class="anchored" data-anchor-id="time-travel">Time travel</h4>
 <p>That sounds like sci-fi but it basically means, given a point of time in the past, what was the value of this particular feature at that point of time. DS/MLE often need this to create their dataset where they use existing labels at different point in time and collect historical aggregates from past until this point-in-time to create the ML models. Getting this right is really important to avoid label leakage.</p>
-<p>This is often not available in traditional DB solutions unless for each schema that contains our features, we add an event-time column. And one can image this data growing to be super large to be stored in a traditional DB.</p>
+<p>This is often not available in traditional DB solutions unless for each schema that contains our features, we add an event-time column. And one can imagine this data growing to be super large to be stored in a traditional DB.</p>
 <p>A more appropriate solution in this case is storing your snapshot or changelogs partitioned by time on Datalake. So we can store all the updates partitioned by date/time and we can write Spark/SQL queries on top of it to answer question such as: what was the average rating given by this user from January 2020 to March 2020.</p>
 <p>Thankfully this is provided as ready-to-use solutions by <a href="https://aws.amazon.com/big-data/datalakes-and-analytics/">AWS</a> (using a bunch of AWS solutions such as S3, Glue, Athena, Kinesis), and <a href="https://docs.databricks.com/delta/index.html">Databricks Delta</a>. Delta can work on top of your existing Datalake (S3, Azure blog storage, HDFS) and provide good data management solution on top of it.</p>
 <p>A challenging aspect of this is to manage streaming data with change-logs on your datalake. Delta by Databricks provides a solution to this problem as well. One option is to not perform streaming updates, and run batch-incremental updates frequently on your changelogs, and this is usually good enough. For e.g.&nbsp;user’s last 90 days of historical aggregate (average 90 day CTR of a user) won’t change much every hour so it’s alright to do it on a snapshot once per day. However, if last 10 searches made by the user is important for your model then you need streaming updates.</p>
@@ -253,7 +264,7 @@ ul.task-list li input[type="checkbox"] {
 <section id="data-governance" class="level4">
 <h4 class="anchored" data-anchor-id="data-governance">Data governance</h4>
 <p>An often ignored aspect is data governance, i.e.&nbsp;having some security and monitoring layer on top of your features. Who has access to what should be controlled especially if you are a global business and working in environments with different restrictions (for e.g.&nbsp;using health data). This is also necessary to manage SI data.</p>
-<p>Some data governance solutions provide profiling and cataloging capabilities such that different governance policies can be applied to different levels of sensitive data. Regular audits, quality checks, and monitoring is also a part of data governance. Lastly, encryption, data masking, and deletion of some data can also an important aspect especially if these data can introduce harmful bias in your ML systems.</p>
+<p>Some data governance solutions provide profiling and cataloging capabilities such that different governance policies can be applied to different levels of sensitive data. Regular audits, quality checks, and monitoring is also a part of data governance. Lastly, encryption, data masking, and deletion of some data can also be an important aspect especially if these data can introduce harmful bias in your ML systems.</p>
 </section>
 </section>
 <section id="conclusion" class="level3">
@@ -276,6 +287,18 @@ ul.task-list li input[type="checkbox"] {
 </section>
 
 </main> <!-- /main -->
+<div class="author-card">
+  <img src="../../profile.jpg" alt="Rahul Dubey" class="author-card-img">
+  <div class="author-card-body">
+    <div class="author-card-name">Rahul Dubey</div>
+    <p class="author-card-bio">Senior ML Engineer at Patreon, working on ranking, search, and recommendation systems. I write from-scratch explainers on ML systems, LLMs, and writing better Python.</p>
+    <div class="author-card-links">
+      <a href="../../about.html">About</a>
+      <a href="https://github.com/dubeyrahul/">GitHub</a>
+      <a href="https://www.linkedin.com/in/rvdubey/">LinkedIn</a>
+    </div>
+  </div>
+</div>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
